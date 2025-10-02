@@ -15,11 +15,6 @@
             android:name=".MenuPrincipal"
             android:exported="false" />
         <activity
-            android:name=".MenuPrincipal"
-            android:exported="false"
-            android:label="@string/title_activity_menu_principal"
-            android:theme="@style/Theme.ClubDeportivo" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
