@@ -19,16 +19,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginHorizontal="33px"
-        android:paddingBottom="25px"
-        android:paddingTop="44px">
+        android:layout_marginHorizontal="33dp"
+        android:paddingBottom="2dp"
+        android:paddingTop="22dp">
 
         <EditText
             android:id="@+id/edit_text_uno"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25px"
-            android:hint="Ingresa en DNI a gestionar" />
+            android:layout_marginBottom="12dp"
+            android:hint="@string/ingresa_en_dni_a_gestionar" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp"
+        android:baselineAligned="false">
+
+        <com.example.clubdeportivo.SelectorView
+            android:id="@+id/selector_cliente"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            />
+
+        <com.example.clubdeportivo.SelectorView
+            android:id="@+id/selector_carnet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"/>
 
     </LinearLayout>
 
