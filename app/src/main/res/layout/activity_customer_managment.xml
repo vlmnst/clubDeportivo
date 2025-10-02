@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#E6F7FF"
     tools:context=".CustomerManagmentActivity">
 
     <include
@@ -13,5 +14,22 @@
         layout="@layout/toolbar_main">
 
     </include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="33px"
+        android:paddingBottom="25px"
+        android:paddingTop="44px">
+
+        <EditText
+            android:id="@+id/edit_text_uno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25px"
+            android:hint="Ingresa en DNI a gestionar" />
+
+    </LinearLayout>
 
 </LinearLayout>
