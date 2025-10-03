@@ -24,7 +24,9 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/spinner_background"
         android:paddingStart="12dp"
-        android:paddingEnd="12dp"  />
+        android:paddingEnd="12dp"
+        android:dropDownVerticalOffset="50dp"
+        android:dropDownWidth="match_parent"/>
 
 
 </LinearLayout>
