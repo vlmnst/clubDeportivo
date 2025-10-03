@@ -56,4 +56,51 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/selector_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seleccione un rango de vencimientos:"
+            android:textSize="14sp"
+            android:textColor="#555555"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="35dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/button_date_picker"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="35dp"
+            android:backgroundTint="#56A5D9"
+            android:drawableEnd="@drawable/ic_calendar"
+            android:padding="16dp"
+            android:text="dd/mm/yyyy - dd/mm/yyyy"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
+
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkbox_vencimientos_dia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Vencimientos del día" />
+        </LinearLayout>
+
+
+    </LinearLayout>
 </LinearLayout>
