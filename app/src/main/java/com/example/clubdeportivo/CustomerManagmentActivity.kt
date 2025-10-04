@@ -1,17 +1,24 @@
 package com.example.clubdeportivo
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-
 class CustomerManagmentActivity : AppCompatActivity() {
+
+    private var showCardEmpty = true
+    private val TAG = "CustomerManagment"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -56,13 +63,39 @@ class CustomerManagmentActivity : AppCompatActivity() {
                 // Actualizar el texto del botón con el rango seleccionado
                 buttonDatePicker.text = "$startDateString - $endDateString"
             }
+        }
 
+            // --------- EMPTY AND FULL CLIENTS --------- //
+            val cardEmpty = findViewById<MaterialCardView>(R.id.card_empty_clients)
+            val cardFull = findViewById<MaterialCardView>(R.id.card_full_clients)
+            val textViewClickable = findViewById<TextView>(R.id.clients_change)
 
-            ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-                val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-                insets
+            textViewClickable?.setOnClickListener {
+
+                if (showCardEmpty) {
+                    // Si se está mostrando la Card A, la ocultamos y mostramos la B
+                    cardEmpty.visibility = View.GONE
+                    cardFull.visibility = View.VISIBLE
+                } else {
+                    // Si se está mostrando la Card B, la ocultamos y mostramos la A
+                    cardEmpty.visibility = View.VISIBLE
+                    cardFull.visibility = View.GONE
+                }
+
+                //  Invertimos el estado de la variable para el próximo clic
+                showCardEmpty = !showCardEmpty
+
+                ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+                    val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+                    v.setPadding(
+                        systemBars.left,
+                        systemBars.top,
+                        systemBars.right,
+                        systemBars.bottom
+                    )
+                    insets
+                }
             }
         }
-    }
+
 }

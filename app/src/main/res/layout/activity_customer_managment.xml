@@ -104,6 +104,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/clients_change"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/clientes"
@@ -117,7 +118,7 @@
             android:layout_marginHorizontal="33dp">
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_opcion_a"
+                android:id="@+id/card_empty_clients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
@@ -152,7 +153,7 @@
 
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_opcion_b"
+                android:id="@+id/card_full_clients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
