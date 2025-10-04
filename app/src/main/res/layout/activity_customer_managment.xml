@@ -157,13 +157,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:cardElevation="4dp">
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@android:color/transparent">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_clients"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¡Ahora estás viendo la Card B!"
-                    android:padding="16dp"/>
+                    tools:listitem="@layout/list_item_client" />
 
             </com.google.android.material.card.MaterialCardView>
 

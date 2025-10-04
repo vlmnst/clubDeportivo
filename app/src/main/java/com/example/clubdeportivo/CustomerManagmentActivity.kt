@@ -9,6 +9,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
@@ -23,6 +25,23 @@ class CustomerManagmentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_customer_managment)
+
+        // ----- INFO MOCK LISTADO -----//
+
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_clients)
+        val listaDeClientesMock = listOf(
+            Client("Juan", "Pérez", "39709589"),
+            Client("María", "García", "28123456"),
+            Client("Carlos", "López", "35789012"),
+            Client("Ana", "Martínez", "41234567"),
+            Client("Luis", "Rodríguez", "33456789"),
+            Client("Laura", "Sánchez", "40567890")
+        )
+
+        val clientAdapter = ClientAdapter(listaDeClientesMock)
+        recyclerView.adapter = clientAdapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
 
         // --- SELECTORES ----- //
         val selectorCliente = findViewById<SelectorView>(R.id.selector_cliente)
