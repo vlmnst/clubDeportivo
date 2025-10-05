@@ -12,13 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ClubDeportivo">
         <activity
-            android:name=".MenuPrincipal"
+            android:name=".RegistrarCliente"
+            android:exported="false" />
+        <activity
+            android:name=".registrar"
+            android:exported="false" />
+        <activity
+            android:name=".RegistroExitoso"
+            android:exported="false" />
+        <activity
+            android:name=".registrar_socio_nosocio"
             android:exported="false" />
         <activity
             android:name=".MenuPrincipal"
-            android:exported="false"
-            android:label="@string/title_activity_menu_principal"
-            android:theme="@style/Theme.ClubDeportivo" />
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

@@ -45,10 +45,11 @@
         >
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_Registrar_Cliente"
             android:layout_width="match_parent"
             android:layout_marginHorizontal="45dp"
             android:layout_height="wrap_content"
-            android:text="Registrar  un nuevo cliente"
+            android:text="Registrar un nuevo cliente"
             android:background="@drawable/btn_primario"
             android:backgroundTint="@null"
             android:textAllCaps="false"

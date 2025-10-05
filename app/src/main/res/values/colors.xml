@@ -3,4 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="club_primary_blue">#002E4D</color>
+    <color name="btn_resgistrar">#0066CC</color>
+    <color name="gris_vistaPrevia_carnet">#E3E3E3</color>
 </resources>
