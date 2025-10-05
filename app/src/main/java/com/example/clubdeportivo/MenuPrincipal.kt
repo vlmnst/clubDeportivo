@@ -28,5 +28,11 @@ class MenuPrincipal : AppCompatActivity() {
             // Iniciar la Activity
             startActivity(intent)
         }
+
+        val btnManageCustomer = findViewById<Button>(R.id.btn_manage_customer)
+        btnManageCustomer.setOnClickListener {
+            val intent = Intent(this, CustomerManagmentActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#E6F7FF"
     tools:context=".MenuPrincipal">
 
     <!-- LLAMA AL MENU HAMBURGESA -->
@@ -56,6 +57,7 @@
             />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_manage_customer"
             android:layout_width="match_parent"
             android:layout_marginHorizontal="45dp"
             android:layout_height="wrap_content"

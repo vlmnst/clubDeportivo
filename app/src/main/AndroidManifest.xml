@@ -24,6 +24,9 @@
             android:name=".registrar_socio_nosocio"
             android:exported="false" />
         <activity
+            android:name=".CustomerManagmentActivity"
+            android:exported="false" />
+        <activity
             android:name=".MenuPrincipal"
             android:exported="false" />
         <activity
