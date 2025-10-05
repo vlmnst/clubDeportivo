@@ -15,13 +15,7 @@
             android:name=".RegistrarCliente"
             android:exported="false" />
         <activity
-            android:name=".registrar"
-            android:exported="false" />
-        <activity
             android:name=".RegistroExitoso"
-            android:exported="false" />
-        <activity
-            android:name=".registrar_socio_nosocio"
             android:exported="false" />
         <activity
             android:name=".CustomerManagmentActivity"
