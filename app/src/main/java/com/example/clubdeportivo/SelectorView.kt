@@ -13,7 +13,6 @@ class SelectorView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
-
     private val label: TextView
     private val spinner: Spinner
 
@@ -42,7 +41,6 @@ class SelectorView @JvmOverloads constructor(
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
     }
-
     // Función para obtener el valor seleccionado
     fun getSelected(): String {
         return spinner.selectedItem?.toString() ?: ""
