@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="2dp"
-    app:cardUseCompatPadding="true"
+    app:cardElevation="4dp"
+    app:layout_marginBaseline="@dimen/cardview_compat_inset_shadow"
     app:cardBackgroundColor="@android:color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,40 +21,40 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:textSize="16sp"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tv_lastName_client"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Nombre" />
 
         <TextView
             android:id="@+id/tv_lastName_client"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
             android:layout_marginStart="8dp"
+            android:textColor="@android:color/black"
             android:textSize="16sp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tv_dni_client"
             app:layout_constraintHorizontal_weight="1"
-            tools:text="Apellido"
-            app:layout_constraintStart_toEndOf="@+id/tv_name_client" />
+            app:layout_constraintStart_toEndOf="@+id/tv_name_client"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Apellido" />
 
         <TextView
             android:id="@+id/tv_dni_client"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/darker_gray"
             android:layout_marginStart="16dp"
+            android:textColor="@android:color/darker_gray"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="39709589"
-            app:layout_constraintStart_toEndOf="@+id/tv_lastName_client" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_lastName_client"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="39709589" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

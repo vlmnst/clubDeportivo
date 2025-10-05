@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ClientAdapter(private val listaClientes: List<Client>) :
+class ClientAdapter(private var clientList: List<Client>) :
     RecyclerView.Adapter<ClientAdapter.ClientViewHolder>() {
 
     inner class ClientViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -23,14 +23,19 @@ class ClientAdapter(private val listaClientes: List<Client>) :
     }
 
     override fun onBindViewHolder(holder: ClientViewHolder, position: Int) {
-        val clienteActual = listaClientes[position]
+        val currentClient = clientList[position]
         // Asignamos cada dato a su respectivo TextView
-        holder.nameTextView.text = clienteActual.name
-        holder.lastNameTextView.text = clienteActual.lastName
-        holder.dniTextView.text = clienteActual.dni
+        holder.nameTextView.text = currentClient.name
+        holder.lastNameTextView.text = currentClient.lastName
+        holder.dniTextView.text = currentClient.dni
+    }
+
+    fun updateDataClients(newList: List<Client>) {
+        this.clientList = newList
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
-        return listaClientes.size
+        return clientList.size
     }
 }

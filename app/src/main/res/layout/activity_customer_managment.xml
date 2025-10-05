@@ -170,10 +170,59 @@
 
         </FrameLayout>
 
+        <LinearLayout
+            android:id="@+id/pagination_controls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="18dp">
+
+            <ImageButton
+                android:id="@+id/btn_first_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/first_page_24px"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Primera página"/>
+
+            <ImageButton
+                android:id="@+id/btn_prev_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/prev_page"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Página anterior"/>
+
+            <TextView
+                android:id="@+id/tv_page_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:textSize="16sp"
+                tools:text="1 de 10" />
+
+            <ImageButton
+                android:id="@+id/btn_next_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/next_page"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Página siguiente"/>
+
+            <ImageButton
+                android:id="@+id/btn_last_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/last_page_24px"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Última página"/>
+
+        </LinearLayout>
+
 
     </LinearLayout>
-
-
-
 
 </LinearLayout>
