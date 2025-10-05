@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:minHeight="300dp"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/tv_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Socio"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+    <TextView
+        android:id="@+id/tv_dialog_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre y apellido: Juan Pérez"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/tv_dialog_dni"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DNI: 33333333"
+        android:layout_marginBottom="16dp"/>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_vencimiento_cuota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vto de la cuota: 05/10/25"
+        android:visibility="gone"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tv_carnet_impreso_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¡Ya imprimiste el carnet de este socio!"
+        android:visibility="gone"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btn_cobrar_actividad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#56A5D9"
+        android:text="Cobrar actividad"/>
+
+    <LinearLayout
+        android:id="@+id/layout_botones_socio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btn_imprimir_carnet"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="#56A5D9"
+            android:text="Imprimir carnet"/>
+
+        <Button
+            android:id="@+id/btn_cobrar_cuota"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="#56A5D9"
+            android:text="Cobrar cuota"/>
+    </LinearLayout>
+
+</LinearLayout>

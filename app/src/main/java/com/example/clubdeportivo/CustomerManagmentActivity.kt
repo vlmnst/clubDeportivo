@@ -54,23 +54,24 @@ class CustomerManagmentActivity : AppCompatActivity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_clients)
         listCompleteClients = listOf(
-            Client("Juan", "Pérez", "39709589"),
-            Client("María", "García", "28123456"),
-            Client("Carlos", "López", "35789012"),
-            Client("Ana", "Martínez", "41234567"),
-            Client("Luis", "Rodríguez", "33456789"),
-            Client("Laura", "Sánchez", "40567890"),
-            Client("Pedro", "Gómez", "31234567"),
-            Client("Sofía", "Fernández", "42345678"),
-            // --- Página 2 ---
-            Client("Miguel", "Torres", "38765432"),
-            Client("Elena", "Ramírez", "29876543"),
-            Client("David", "Jiménez", "36543210"),
-            Client("Isabel", "Ruiz", "43210987")
+            Client("Juan", "Pérez", "39709589", true),
+            Client("María", "García", "28123456", true),
+            Client("Carlos", "López", "35789012", true),
+            Client("Ana", "Martínez", "41234567", false),
+            Client("Luis", "Rodríguez", "33456789", false),
+            Client("Laura", "Sánchez", "40567890", true),
+            Client("Pedro", "Gómez", "31234567", false),
+            Client("Sofía", "Fernández", "42345678", false),
+            Client("Miguel", "Torres", "38765432", true),
+            Client("Elena", "Ramírez", "29876543", true),
+            Client("David", "Jiménez", "36543210", true),
+            Client("Isabel", "Ruiz", "43210987", false)
         )
 
 
-        clientAdapter = ClientAdapter(emptyList())
+        clientAdapter = ClientAdapter(emptyList()) {
+            client -> showDialogClient(client)
+        }
         recyclerView.adapter = clientAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -178,7 +179,6 @@ class CustomerManagmentActivity : AppCompatActivity() {
     private fun updateViewPaginated() {
         if(showCardEmpty) paginationControls.visibility = View.GONE
         else paginationControls.visibility = View.VISIBLE
-        Log.d("showCardEmpty", "que pasa con showCardEmpty? ${showCardEmpty}")
         // 1. Calcular el número total de páginas
         totalPages = ceil(listCompleteClients.size.toDouble() / limitForPage).toInt()
 
@@ -201,6 +201,10 @@ class CustomerManagmentActivity : AppCompatActivity() {
         btnLast.isEnabled = currentPage < totalPages - 1
     }
 
+    private fun showDialogClient(client: Client) {
+        val dialog = ClientDetailDialogFragment.newInstance(client)
+        dialog.show(supportFragmentManager, "ClientDetailDialog")
+    }
 
 
 }

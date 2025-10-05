@@ -6,7 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ClientAdapter(private var clientList: List<Client>) :
+class ClientAdapter(
+    private var clientList: List<Client>,
+    private val onItemClicked: (Client) -> Unit
+) :
     RecyclerView.Adapter<ClientAdapter.ClientViewHolder>() {
 
     inner class ClientViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -28,6 +31,10 @@ class ClientAdapter(private var clientList: List<Client>) :
         holder.nameTextView.text = currentClient.name
         holder.lastNameTextView.text = currentClient.lastName
         holder.dniTextView.text = currentClient.dni
+
+        holder.itemView.setOnClickListener {
+            onItemClicked(currentClient)
+        }
     }
 
     fun updateDataClients(newList: List<Client>) {
