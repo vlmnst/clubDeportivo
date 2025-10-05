@@ -1,5 +1,6 @@
 package com.example.clubdeportivo
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -136,7 +137,18 @@ class CustomerManagmentActivity : AppCompatActivity() {
 
                 }
             }
+
+        // ----------- PAGINACIÓN ----------- //
         configPagination()
+        updateViewPaginated()
+
+        // ----------------REDIRECCION DE LA CARD -------------//
+        val linkRegistrarClient = findViewById<TextView>(R.id.text_registra_cliente)
+
+        linkRegistrarClient?.setOnClickListener {
+            val intent = Intent(this, RegistrarCliente::class.java)
+            startActivity(intent)
+        }
                 ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
                     val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
                     v.setPadding(
@@ -148,10 +160,6 @@ class CustomerManagmentActivity : AppCompatActivity() {
                     insets
                 }
 
-
-        // ----------- PAGINACIÓN ----------- //
-        configPagination()
-        updateViewPaginated()
         }
 
     private fun configPagination() {
