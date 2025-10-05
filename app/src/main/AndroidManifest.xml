@@ -15,6 +15,15 @@
             android:name=".RegistrarCliente"
             android:exported="false" />
         <activity
+            android:name=".Carnet"
+            android:exported="false" />
+        <activity
+            android:name=".Compartir"
+            android:exported="false" />
+        <activity
+            android:name=".Descargando"
+            android:exported="false" />
+        <activity
             android:name=".RegistroExitoso"
             android:exported="false" />
         <activity
