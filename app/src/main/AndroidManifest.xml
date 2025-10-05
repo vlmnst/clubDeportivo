@@ -12,6 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ClubDeportivo">
         <activity
+            android:name=".RegistrarCliente"
+            android:exported="false" />
+        <activity
+            android:name=".registrar"
+            android:exported="false" />
+        <activity
+            android:name=".RegistroExitoso"
+            android:exported="false" />
+        <activity
+            android:name=".registrar_socio_nosocio"
+            android:exported="false" />
+        <activity
             android:name=".CustomerManagmentActivity"
             android:exported="false" />
         <activity

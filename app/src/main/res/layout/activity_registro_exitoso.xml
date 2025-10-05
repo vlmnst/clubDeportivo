@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MenuPrincipal">
+
+    <!-- Llamado al menu hamburguesa -->
+    <include
+        android:id="@+id/toolbar_container"
+        layout="@layout/toolbar_main">
+
+    </include>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E6F7FF"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="20dp">
+
+            <!-- TEXTo-->
+            <TextView
+                android:id="@+id/registroSocioNosocio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100sp"
+                android:gravity="center"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:text="Socio / No Socio"/>
+
+            <TextView
+                android:id="@+id/registroNombreApellido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:text="Nombre Apellido"/>
+
+            <TextView
+                android:id="@+id/registradoExitosamente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50sp"
+                android:gravity="center"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:text="Registrado exitosamente"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100sp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/registrar_checked"
+                android:layout_marginBottom="50dp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_cobrar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Cobrar Cuota / Actividad"
+                android:backgroundTint="@null"
+                android:background="@drawable/btn_primario"
+                android:textColor="#FFFFFF"
+                android:paddingRight="50dp"
+                android:paddingLeft="50dp"
+                android:textSize="18sp"
+                tools:ignore="InvalidId" />
+
+        </LinearLayout>
+
+
+            <!-- UsUario y Contraseña -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="400dp"
+                        android:layout_height="400dp"
+                        android:alpha="0.3"
+                        android:scaleType="fitEnd"
+                        android:src="@drawable/logo"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/toolbar_container" />
+
+                </FrameLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
