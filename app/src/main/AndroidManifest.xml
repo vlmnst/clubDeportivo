@@ -30,13 +30,19 @@
             android:name=".RegistrarCliente"
             android:exported="false" />
         <activity
-            android:name=".registrar"
+            android:name=".Carnet"
+            android:exported="false" />
+        <activity
+            android:name=".Compartir"
+            android:exported="false" />
+        <activity
+            android:name=".Descargando"
             android:exported="false" />
         <activity
             android:name=".RegistroExitoso"
             android:exported="false" />
         <activity
-            android:name=".registrar_socio_nosocio"
+            android:name=".CustomerManagmentActivity"
             android:exported="false" />
         <activity
             android:name=".MenuPrincipal"

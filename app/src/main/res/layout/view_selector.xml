@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/selector_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Texto que describe el selector -->
+    <TextView
+        android:id="@+id/selector_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Titulo"
+        android:textSize="14sp"
+        android:textColor="#555555"
+        android:layout_marginBottom="4dp"/>
+
+    <!-- Desplegable -->
+    <Spinner
+        android:id="@+id/selector_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/spinner_background"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:dropDownVerticalOffset="50dp"
+        android:dropDownWidth="match_parent"/>
+
+
+</LinearLayout>

@@ -15,6 +15,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#BFBFBF">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#BFBFBF"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="380dp"
@@ -65,6 +70,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/idWhatsapp"
                     android:layout_width="75dp"
                     android:layout_height="80dp"
                     android:layout_margin="10dp"
@@ -90,6 +96,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/idGmail"
                     android:layout_width="75dp"
                     android:layout_height="80dp"
                     android:layout_marginTop="10dp"
@@ -115,6 +122,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/idDrive"
                     android:layout_width="75dp"
                     android:layout_height="80dp"
                     android:layout_margin="10dp"
@@ -140,6 +148,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/idImprimir"
                     android:layout_width="75dp"
                     android:layout_height="80dp"
                     android:layout_marginTop="10dp"
@@ -164,17 +173,10 @@
 
                 </LinearLayout>
 
-
-
             </LinearLayout>
-
-
-
 
         </LinearLayout>
 
-
     </FrameLayout>
-
 
 </LinearLayout>
