@@ -1,32 +1,20 @@
 package com.example.clubdeportivo
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class MenuPrincipal : AppCompatActivity() {
+class ConfirmacionCobroActividadActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_menu_principal)
+        setContentView(R.layout.activity_confirmacion_cobro_actividad)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
-        }
-
-        // Obter ID del Btn
-        val btnRegistrarCliente = findViewById<Button>(R.id.btn_Registrar_Cliente)
-        // listen click == addEventListener('click')
-        btnRegistrarCliente.setOnClickListener {
-            // Crear el Intent == "intención" de hacer algo (abrir DashboardActivity)
-            val intent = Intent(this, RegistrarCliente::class.java)
-            // Iniciar la Activity
-            startActivity(intent)
         }
     }
 }

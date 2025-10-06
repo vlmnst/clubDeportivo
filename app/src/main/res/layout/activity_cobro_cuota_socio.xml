@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/CobroCuotaSocio"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CobroCuotaSocio"
+    android:orientation="vertical">
+
+    <!-- LLAMA AL MENU HAMBURGESA -->
+    <include
+        android:id="@+id/toolbar_container"
+        layout="@layout/toolbar_main">
+
+    </include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E6F7FF"
+        android:orientation="vertical"
+        android:paddingTop="20dp">
+
+        <!-- Encabezado -->
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="50dp"
+            android:gravity="center"
+            android:text="Cobro Cuota Socio"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginBottom="5dp"
+                android:padding="5dp"
+                android:text="Ingrese monto a pagar:" />
+
+            <EditText
+                android:id="@+id/edit_monto_pagar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/ingreso_datos"
+                android:gravity="center"
+                android:hint="Monto a pagar"
+                android:padding="10dp"
+                android:textColorHint="#FFFFFF" />
+        </LinearLayout>
+
+
+            <!--Msj aclaración-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="20dp"
+                android:src="@drawable/alerta"
+                android:layout_marginLeft="10dp"
+                />
+
+            <TextView
+                android:id="@+id/alert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="5dp"
+                android:text="Sólo se permite ingresar números y coma(,) para los centavos"
+                android:textColor="#CF010B"
+                android:textSize="10sp"
+                android:gravity="center"
+
+                />
+
+            </LinearLayout>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical"
+               android:layout_gravity="center_vertical"
+               android:layout_marginTop="10dp"
+               >
+
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:text="Selecciona el método de pago"
+                   android:layout_marginTop="30dp"
+                   android:layout_marginBottom="10dp"
+                   android:gravity="center"
+                   />
+
+                <!--Opciones de pago -->
+               <RadioGroup
+                   android:id="@+id/radioGroupPago"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:gravity="center"
+                   android:orientation="horizontal"
+                   android:layoutDirection="ltr"
+                   >
+
+                   <RadioButton
+                       android:id="@+id/btnEfectivo"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Efectivo"
+                       android:textSize="18sp"/>
+
+                   <RadioButton
+                       android:id="@+id/btnTarjeta"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Tarjeta"
+                       android:textSize="18sp"/>
+
+               </RadioGroup>
+
+               <!--Boton registro + imagen (al final btn no quedó sobre la imagen, ver lo de retirar frame-->
+
+
+                   <FrameLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent">
+
+                       <!-- app:layout_constraintBottom_toBottomOf="parent"
+                           app:layout_constraintEnd_toEndOf="parent"
+                           app:layout_constraintStart_toStartOf="parent"
+                           app:layout_constraintTop_toBottomOf="@id/toolbar_container" /> -->
+
+
+                       <ImageView
+                           android:layout_width="400dp"
+                           android:layout_height="400dp"
+                           android:layout_gravity="center"
+                           android:layout_marginTop="100dp"
+                           android:alpha="0.3"
+                           android:scaleType="fitEnd"
+                           android:src="@drawable/logo" />
+
+                       <androidx.appcompat.widget.AppCompatButton
+                       android:id="@+id/btnRegistrarPago"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center|top"
+                       android:layout_marginTop="50dp"
+                       android:background="@drawable/btn_primario"
+                       android:backgroundTint="@null"
+                       android:paddingLeft="50dp"
+                       android:paddingRight="50dp"
+                       android:text="Registrar Pago"
+                       android:textColor="#FFFFFF"
+                       android:textSize="18sp"
+                       tools:ignore="InvalidId" />
+
+               </FrameLayout>
+
+
+               </LinearLayout>
+
+
+            </LinearLayout>
+
+             </LinearLayout>
+
+
+
