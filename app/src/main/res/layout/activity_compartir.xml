@@ -11,10 +11,6 @@
 
 
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#BFBFBF">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -172,11 +168,7 @@
                         android:textColor="#002244"/>
 
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
-
-    </FrameLayout>
-
+    </LinearLayout>
 </LinearLayout>
