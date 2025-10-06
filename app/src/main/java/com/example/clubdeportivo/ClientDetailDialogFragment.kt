@@ -1,4 +1,5 @@
 package com.example.clubdeportivo
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +38,9 @@ class ClientDetailDialogFragment : DialogFragment() {
         val btnCobrarActividad = view.findViewById<Button>(R.id.btn_cobrar_actividad)
         val layoutBotonesSocio = view.findViewById<LinearLayout>(R.id.layout_botones_socio)
 
+        // Redireccion de imprimir carnet
+        val btnPrintID = view.findViewById<Button>(R.id.btn_imprimir_carnet)
+
         // Llenar datos comunes
         tvNameComplete.text = "Nombre y apellido: ${client.name} ${client.lastName}"
         tvDni.text = "DNI: ${client.dni}"
@@ -51,6 +55,13 @@ class ClientDetailDialogFragment : DialogFragment() {
 
             // Aquí pondrías la fecha real
             tvVencimiento.text = "Vto de la cuota: 05/10/25"
+            btnPrintID.setOnClickListener {
+                val intent = Intent(requireContext(), Carnet::class.java).apply{
+                    putExtra("client_to_print", client)
+                }
+                startActivity(intent)
+
+            }
         } else {
             tvTitle.text = "No Socio"
             // Las vistas de socio ya están en GONE por defecto en el XML,
@@ -60,7 +71,10 @@ class ClientDetailDialogFragment : DialogFragment() {
             layoutBotonesSocio.visibility = View.GONE
             btnCobrarActividad.visibility = View.VISIBLE
         }
+
+
     }
+
 
     companion object {
         // Función para crear una instancia del Dialog y pasarle datos de forma segura
