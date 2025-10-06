@@ -37,11 +37,9 @@ class ClientDetailDialogFragment : DialogFragment() {
         val tvInfoCarnet = view.findViewById<TextView>(R.id.tv_carnet_impreso_info)
         val btnCobrarActividad = view.findViewById<Button>(R.id.btn_cobrar_actividad)
         val layoutBotonesSocio = view.findViewById<LinearLayout>(R.id.layout_botones_socio)
-
-        // Redireccion de imprimir carnet
         val btnPrintID = view.findViewById<Button>(R.id.btn_imprimir_carnet)
-        // Redireccion cobrar cuota
         val btnCobrarCuota = view.findViewById<Button>(R.id.btn_cobrar_cuota)
+
         // Llenar datos comunes
         tvNameComplete.text = "Nombre y apellido: ${client.name} ${client.lastName}"
         tvDni.text = "DNI: ${client.dni}"
@@ -74,6 +72,10 @@ class ClientDetailDialogFragment : DialogFragment() {
             tvInfoCarnet.visibility = View.GONE
             layoutBotonesSocio.visibility = View.GONE
             btnCobrarActividad.visibility = View.VISIBLE
+            btnCobrarActividad.setOnClickListener {
+                val intent = Intent(requireContext(), CobroActividadNoSocioActivity::class.java)
+                startActivity(intent)
+            }
         }
 
 
