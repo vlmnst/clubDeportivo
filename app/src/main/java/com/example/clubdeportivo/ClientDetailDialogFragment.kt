@@ -40,7 +40,8 @@ class ClientDetailDialogFragment : DialogFragment() {
 
         // Redireccion de imprimir carnet
         val btnPrintID = view.findViewById<Button>(R.id.btn_imprimir_carnet)
-
+        // Redireccion cobrar cuota
+        val btnCobrarCuota = view.findViewById<Button>(R.id.btn_cobrar_cuota)
         // Llenar datos comunes
         tvNameComplete.text = "Nombre y apellido: ${client.name} ${client.lastName}"
         tvDni.text = "DNI: ${client.dni}"
@@ -60,7 +61,10 @@ class ClientDetailDialogFragment : DialogFragment() {
                     putExtra("client_to_print", client)
                 }
                 startActivity(intent)
-
+            }
+            btnCobrarCuota.setOnClickListener {
+                val intent = Intent(requireContext(), CobroCuotaSocio::class.java)
+                startActivity(intent)
             }
         } else {
             tvTitle.text = "No Socio"

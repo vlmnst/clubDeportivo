@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
 
-        android:text="¡Bienvenido/a!\n ¿Que necesitas hacer el día de hoy?"
+        android:text="¡Bienvenido/a!\n ¿Qué necesitas hacer el día de hoy?"
         tools:layout_editor_absoluteX="158dp"
         tools:layout_editor_absoluteY="244dp" />
 

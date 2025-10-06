@@ -76,13 +76,14 @@
             android:id="@+id/btn_login"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:text="Ingresar"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:layout_marginTop="20dp"
             android:background="@drawable/btn_primario"
-            android:backgroundTint="@null"
-            android:text="Ingresar"
             android:textAllCaps="false"
-            android:textSize="14dp"
-            android:textStyle="bold" />
+            />
 
         </LinearLayout>
 </LinearLayout>
