@@ -54,6 +54,7 @@
             android:background="@drawable/btn_primario"
             android:backgroundTint="@null"
             android:textAllCaps="false"
+            android:textColor="@color/white"
             />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -66,6 +67,7 @@
             android:background="@drawable/btn_primario"
             android:backgroundTint="@null"
             android:textAllCaps="false"
+            android:textColor="@color/white"
             />
 
 
