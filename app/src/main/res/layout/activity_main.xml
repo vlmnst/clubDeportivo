@@ -55,14 +55,14 @@
             android:padding="16dp">
 
             <EditText
-                android:id="@+id/edit_text_uno"
+                android:id="@+id/et_nombre_usuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Usuario"
                 android:layout_marginBottom="30dp"/>
 
             <EditText
-                android:id="@+id/edit_text_dos"
+                android:id="@+id/et_contrasenia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Contraseña"
