@@ -21,7 +21,7 @@ import java.util.Date
 import java.util.Locale
 import kotlin.math.ceil
 
-class CustomerManagmentActivity : AppCompatActivity() {
+class CustomerManagmentActivity : BaseActivity() {
 
     private var showCardEmpty = true
     private var currentPage = 0
@@ -70,11 +70,19 @@ class CustomerManagmentActivity : AppCompatActivity() {
         )
 
 
+
+
+        //LLAMA A LA FUNCION DE LA BASEACTIVITY (nav menu)
+        setupNavigationDrawer()
+
+
+
         clientAdapter = ClientAdapter(emptyList()) {
             client -> showDialogClient(client)
         }
         recyclerView.adapter = clientAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
+
 
 
         // --- SELECTORES ----- //

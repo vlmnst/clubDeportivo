@@ -10,17 +10,16 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 
+
+// Base para nav menu
+
 // 'abstract' = es una plantilla y no se puede ejecutar por sí misma
 abstract class BaseActivity : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
 
-    /**
-     * Esta función contendrá TODA la lógica del menú.
-     * Las activities "hijas" la llamarán desde su onCreate.
-     */
     fun setupNavigationDrawer() {
-        // --- Configuración de la Toolbar ---
+        // --- Config de la Toolbar ---
         val toolbar = findViewById<Toolbar>(R.id.main_toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -51,13 +50,14 @@ abstract class BaseActivity : AppCompatActivity() {
                     }
                 }
                 R.id.nuevo_cliente -> {
-                    // Si no estamos en NuevoClienteActivity, la abrimos
                     if (this !is RegistrarCliente) { // Reemplaza con el nombre real de tu Activity
                         startActivity(Intent(this, RegistrarCliente::class.java))
                     }
                 }
                 R.id.customer_menu -> {
-                    // ... Lógica para Gestionar Clientes ...
+                    if (this !is CustomerManagmentActivity) {
+                        startActivity(Intent(this, CustomerManagmentActivity::class.java))
+                    }
                 }
                 R.id.nav_logout -> {
                     // Lógica para cerrar sesión
