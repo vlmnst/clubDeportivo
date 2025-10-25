@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class MenuPrincipal : AppCompatActivity() {
+class MenuPrincipal : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -38,6 +38,10 @@ class MenuPrincipal : AppCompatActivity() {
             val intent = Intent(this, CustomerManagmentActivity::class.java)
             startActivity(intent)
         }
+
+
+        //LLAMA A LA FUNCION DE LA BASEACTIVITY (nav menu)
+        setupNavigationDrawer()
 
     }
 }
