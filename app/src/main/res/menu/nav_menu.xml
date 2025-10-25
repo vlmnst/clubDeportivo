@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_principal"
+            android:icon="@drawable/baseline_home_24"
+            android:title="Menu Principal" />
+        <item
+            android:id="@+id/nuevo_cliente"
+            android:icon="@drawable/baseline_person_add_alt_1_24"
+            android:title="Nuevo Cliente" />
+        <item
+            android:id="@+id/customer_menu"
+            android:icon="@drawable/outline_admin_panel_settings_24"
+            android:title="Gestioná tus Clientes" />
+    </group>
+    <item android:title="Cuenta">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/outline_account_circle_off_24"
+                android:title="Cerrar Sesión" />
+        </menu>
+    </item>
+</menu>
