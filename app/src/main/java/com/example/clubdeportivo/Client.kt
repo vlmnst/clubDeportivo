@@ -12,4 +12,5 @@ data class Cliente(
     val apto: Boolean,
     val fecha_inscripcion: String, // Formato "AAAA-MM-DD"
     val socio: Boolean,
+    val carnet: Boolean,
 ) : Parcelable
