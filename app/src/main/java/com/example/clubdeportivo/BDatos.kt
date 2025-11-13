@@ -22,7 +22,7 @@ data class Cliente(
     val email: String?,    // Nulable si no es obligatorio
     val apto: Boolean,
     val fecha_inscripcion: String, // Formato "AAAA-MM-DD"
-    val socio: Boolean
+    val socio: Boolean,
 )
 
 
@@ -32,7 +32,7 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
     //llama la primera vez que se accede a la base de datos
     override fun onCreate(db: SQLiteDatabase?) {
         //crear la tabla
-        val crearTablaSql = "CREATE TABLE IF NOT EXISTS Usuario (" +
+        val crearTablaSql = "CREATE TABLE IF NOT EXISTS $TABLA_USUARIO (" +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "nombre TEXT NOT NULL, " +
                 "clave TEXT NOT NULL" +
@@ -102,7 +102,7 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
                 false
             }
         }
-        }
+    }
 
 
     fun buscarClientePorDNI(dni: String): Cliente? {
@@ -168,10 +168,6 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
         return existeCliente
     }
 
-
-
-
-
     fun verificarUsuario(nombre: String, clave: String): Boolean {
         // Obtener una base de datos legible
         val db = this.readableDatabase
@@ -204,7 +200,31 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
     }
 
 
+    fun obtenerClientes(): List<Cliente> {
+        val lista = mutableListOf<Cliente>()
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM $TABLA_CLIENTE", null)
 
+        if (cursor.moveToFirst()) {
+            do {
+                val id = cursor.getInt(cursor.getColumnIndexOrThrow("ID"))
+                val nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre"))
+                val dni = cursor.getString(cursor.getColumnIndexOrThrow("dni"))
+                val telefono = cursor.getString(cursor.getColumnIndexOrThrow("telefono"))
+                val email = cursor.getString(cursor.getColumnIndexOrThrow("email"))
+                val fecha = cursor.getString(cursor.getColumnIndexOrThrow("fecha_inscripcion"))
+                val apto = cursor.getInt(cursor.getColumnIndexOrThrow("apto")) == 1
+                val socio = cursor.getInt(cursor.getColumnIndexOrThrow("socio")) == 1
+
+                val cliente = Cliente(id, nombre, dni, telefono, email, apto, fecha, socio)
+                lista.add(cliente)
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        db.close()
+        return lista
+    }
 
 
 }
