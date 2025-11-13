@@ -13,18 +13,6 @@ private val VERSION = 1
 private const val TABLA_USUARIO = "Usuario"
 private const val TABLA_CLIENTE = "Cliente"
 
-//Clase para CLiente
-data class Cliente(
-    val id: Int? = null, // El ID es nulo al insertar, pero se recibe al leer
-    val nombre: String,
-    val dni: String,
-    val telefono: String?, // Nulable si no es obligatorio
-    val email: String?,    // Nulable si no es obligatorio
-    val apto: Boolean,
-    val fecha_inscripcion: String, // Formato "AAAA-MM-DD"
-    val socio: Boolean,
-)
-
 
 // clase BDatos SQLiteOpenHelper
 class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) {
