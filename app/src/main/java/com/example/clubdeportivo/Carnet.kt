@@ -9,7 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class Carnet : AppCompatActivity() {
+class Carnet : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -21,6 +21,13 @@ class Carnet : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+
+
+        //LLAMA A LA FUNCION DE LA BASEACTIVITY (nav menu)
+        setupNavigationDrawer()
+
+        
 
         // -----SETEAR LOS DATOS EN EL CARNET -----//
         val nameClient = findViewById<TextView>(R.id.txtNombre)

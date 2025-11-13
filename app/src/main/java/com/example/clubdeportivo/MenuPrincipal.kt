@@ -11,7 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class MenuPrincipal : AppCompatActivity() {
+// TODAS LAS CLASES DEBEN HEREDAR DE BASEACTIVITY() PARA QUE FUNCIONE LA NAV BATR
+class MenuPrincipal : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -21,6 +22,10 @@ class MenuPrincipal : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+
+        //LLAMA A LA FUNCION DE LA BASEACTIVITY (nav menu)
+        setupNavigationDrawer()
 
         // Obter ID del Btn
         val btnRegistrarCliente = findViewById<Button>(R.id.btn_Registrar_Cliente)
@@ -38,6 +43,9 @@ class MenuPrincipal : AppCompatActivity() {
             val intent = Intent(this, CustomerManagmentActivity::class.java)
             startActivity(intent)
         }
+
+
+
 
     }
 }

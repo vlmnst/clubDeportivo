@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class RegistrarCliente : AppCompatActivity() {
+class RegistrarCliente : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -18,6 +18,12 @@ class RegistrarCliente : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+
+        //LLAMA A LA FUNCION DE LA BASEACTIVITY (nav menu)
+        setupNavigationDrawer()
+
+
         // Obter ID del BtnRegistrar
         val btnRegistrar = findViewById<Button>(R.id.btnRegistrar)
         // listen click == addEventListener('click')
@@ -27,5 +33,8 @@ class RegistrarCliente : AppCompatActivity() {
             // Iniciar la Activity
             startActivity(intent)
         }
+
+        //LLAMA A LA FUNCION DE LA BASEACTIVITY (nav menu)
+        setupNavigationDrawer()
     }
 }
