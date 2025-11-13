@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.graphics.Color
 import android.os.Build
 import android.util.Log
+import android.widget.RadioGroup
 import androidx.annotation.RequiresApi
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -43,7 +44,7 @@ class RegistrarCliente : BaseActivity() {
         val chApto = findViewById<CheckBox>(R.id.check_apto_medico)
         val raSocio = findViewById<RadioButton>(R.id.btnSocio)
         val raNoSocio = findViewById<RadioButton>(R.id.btnNoSocio)
-
+        val grupoSocio = findViewById<RadioGroup>(R.id.grupoSocio)
 
         // OBTENGO BOTON REGISTRAR
         val btnRegistrar = findViewById<Button>(R.id.btnRegistrar)
@@ -95,7 +96,13 @@ class RegistrarCliente : BaseActivity() {
                 null, nombre,dniCheck, telCheck, emailCheck, aptoCheck, fechaInscripcion, isSocio )
             // REGISTRO DE NUEVO CLIENTE
             dbHelper.agregarCliente(nuevoCliente)
-
+            // LIMPIO LOS CAMPOS COMPLETADOS
+            etNombre.text.clear()
+            etDNI.text.clear()
+            etTelefono.text.clear()
+            etEmail.text.clear()
+            chApto.isChecked = false
+            grupoSocio.clearCheck()
             // Crear el Intent == "intención" de hacer algo (abrir DashboardActivity)
             val intent = Intent(this, RegistroExitoso::class.java)
             // Iniciar la Activity
