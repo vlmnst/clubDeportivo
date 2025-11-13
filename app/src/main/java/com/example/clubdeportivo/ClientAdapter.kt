@@ -7,8 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class ClientAdapter(
-    private var clientList: List<Client>,
-    private val onItemClicked: (Client) -> Unit
+    private var clientList: List<Cliente>,
+    private val onItemClicked: (Cliente) -> Unit
 ) :
     RecyclerView.Adapter<ClientAdapter.ClientViewHolder>() {
 
@@ -28,8 +28,7 @@ class ClientAdapter(
     override fun onBindViewHolder(holder: ClientViewHolder, position: Int) {
         val currentClient = clientList[position]
         // Asignamos cada dato a su respectivo TextView
-        holder.nameTextView.text = currentClient.name
-        holder.lastNameTextView.text = currentClient.lastName
+        holder.nameTextView.text = currentClient.nombre
         holder.dniTextView.text = currentClient.dni
 
         holder.itemView.setOnClickListener {
@@ -37,7 +36,7 @@ class ClientAdapter(
         }
     }
 
-    fun updateDataClients(newList: List<Client>) {
+    fun updateDataClients(newList: List<Cliente>) {
         this.clientList = newList
         notifyDataSetChanged()
     }

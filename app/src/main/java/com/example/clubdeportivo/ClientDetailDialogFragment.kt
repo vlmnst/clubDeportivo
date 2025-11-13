@@ -1,6 +1,7 @@
 package com.example.clubdeportivo
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,7 @@ class ClientDetailDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val client = arguments?.getParcelable<Client>("client") ?: return
+        val client = arguments?.getParcelable<Cliente>("client") ?: return
 
         // Referencias a las vistas del dialog
         val tvTitle = view.findViewById<TextView>(R.id.tv_dialog_title)
@@ -41,11 +42,11 @@ class ClientDetailDialogFragment : DialogFragment() {
         val btnCobrarCuota = view.findViewById<Button>(R.id.btn_cobrar_cuota)
 
         // Llenar datos comunes
-        tvNameComplete.text = "Nombre y apellido: ${client.name} ${client.lastName}"
+        tvNameComplete.text = "Nombre y apellido: ${client.nombre}"
         tvDni.text = "DNI: ${client.dni}"
 
         // Lógica condicional: ¿Es socio?
-        if (client.isPartner) {
+        if (client.socio) {
             tvTitle.text = "Socio"
             tvVencimiento.visibility = View.VISIBLE
             tvInfoCarnet.visibility = View.VISIBLE
@@ -84,7 +85,7 @@ class ClientDetailDialogFragment : DialogFragment() {
 
     companion object {
         // Función para crear una instancia del Dialog y pasarle datos de forma segura
-        fun newInstance(client: Client): ClientDetailDialogFragment {
+        fun newInstance(client: Cliente): ClientDetailDialogFragment {
             val args = Bundle()
             args.putParcelable("client", client)
             val fragment = ClientDetailDialogFragment()
