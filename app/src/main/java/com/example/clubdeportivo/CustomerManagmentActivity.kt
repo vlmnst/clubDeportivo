@@ -93,8 +93,7 @@ class CustomerManagmentActivity : BaseActivity() {
             // --------- EMPTY AND FULL CLIENTS CARDS --------- //
             val cardEmpty = findViewById<MaterialCardView>(R.id.card_empty_clients)
             val cardFull = findViewById<MaterialCardView>(R.id.card_full_clients)
-            val textViewClickable = findViewById<TextView>(R.id.clients_change)
-            textViewClickable?.setOnClickListener {
+            if(listCompleteClients.isNotEmpty()) {
                 showCardEmpty = !showCardEmpty
                 if (showCardEmpty) {
                     // Si se está mostrando la Card A, la ocultamos y mostramos la B

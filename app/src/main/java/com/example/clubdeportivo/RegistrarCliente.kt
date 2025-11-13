@@ -93,7 +93,7 @@ class RegistrarCliente : BaseActivity() {
             val fechaInscripcion = LocalDate.now().toString()
             val isSocio = if (raSocio.isChecked) true else false
             val nuevoCliente: Cliente = Cliente(
-                null, nombre,dniCheck, telCheck, emailCheck, aptoCheck, fechaInscripcion, isSocio )
+                null, nombre,dniCheck, telCheck, emailCheck, aptoCheck, fechaInscripcion, isSocio, carnet = false )
             // REGISTRO DE NUEVO CLIENTE
             dbHelper.agregarCliente(nuevoCliente)
             // LIMPIO LOS CAMPOS COMPLETADOS

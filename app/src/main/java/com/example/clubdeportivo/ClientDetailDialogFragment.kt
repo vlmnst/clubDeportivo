@@ -1,5 +1,6 @@
 package com.example.clubdeportivo
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,7 +9,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+
 class ClientDetailDialogFragment : DialogFragment() {
 
     override fun onCreateView(
@@ -25,6 +30,7 @@ class ClientDetailDialogFragment : DialogFragment() {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -50,11 +56,16 @@ class ClientDetailDialogFragment : DialogFragment() {
             tvTitle.text = "Socio"
             tvVencimiento.visibility = View.VISIBLE
             tvInfoCarnet.visibility = View.VISIBLE
+            tvInfoCarnet.text = if(client.carnet) "¡Ya imprimiste el carnet de este socio!" else "Éste socio aún no tiene carnet"
             layoutBotonesSocio.visibility = View.VISIBLE
             btnCobrarActividad.visibility = View.GONE
 
-            // Aquí pondrías la fecha real
-            tvVencimiento.text = "Vto de la cuota: 05/10/25"
+            // Calculo fecha de vencimiento
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            val fecha = LocalDate.parse(client.fecha_inscripcion, formatter)
+            val fechaVencimiento = fecha.plusMonths(1)
+            tvVencimiento.text = "Vto de la cuota: ${fechaVencimiento}"
+
             btnPrintID.setOnClickListener {
                 val intent = Intent(requireContext(), Carnet::class.java).apply{
                     putExtra("client_to_print", client)

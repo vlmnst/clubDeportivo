@@ -120,7 +120,8 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
                     email = it.getString(it.getColumnIndexOrThrow("email")),
                     apto = it.getInt(it.getColumnIndexOrThrow("apto")) == 1, // Convierte Integer a Boolean
                     fecha_inscripcion = it.getString(it.getColumnIndexOrThrow("fecha_inscripcion")),
-                    socio = it.getInt(it.getColumnIndexOrThrow("socio")) == 1 // Convierte Integer a Boolean
+                    socio = it.getInt(it.getColumnIndexOrThrow("socio")) == 1, // Convierte Integer a Boolean
+                    carnet = it.getInt(it.getColumnIndexOrThrow("carnet")) == 1
                 )
             }
         }
@@ -204,7 +205,7 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
                 val apto = cursor.getInt(cursor.getColumnIndexOrThrow("apto")) == 1
                 val socio = cursor.getInt(cursor.getColumnIndexOrThrow("socio")) == 1
 
-                val cliente = Cliente(id, nombre, dni, telefono, email, apto, fecha, socio)
+                val cliente = Cliente(id, nombre, dni, telefono, email, apto, fecha, socio, carnet = false)
                 lista.add(cliente)
             } while (cursor.moveToNext())
         }
