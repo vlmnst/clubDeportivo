@@ -51,7 +51,6 @@ class RegistrarCliente : BaseActivity() {
         btnRegistrar.isEnabled = false
         btnRegistrar.backgroundTintList = ColorStateList.valueOf("#BDBDBD".toColorInt())
 
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -105,6 +104,17 @@ class RegistrarCliente : BaseActivity() {
             grupoSocio.clearCheck()
             // Crear el Intent == "intención" de hacer algo (abrir DashboardActivity)
             val intent = Intent(this, RegistroExitoso::class.java)
+            //Pasa los datos del nuevo cliente a la vista RegistroExitoso
+            intent.putExtra("nombre", nombre)
+            //Corrobora si se trata de Socio o NoSocio y pasa valor del tipo de cliente a la vista RegistroExitoso
+            if(isSocio) {
+                val socio = raSocio.text.toString()
+                intent.putExtra("socio", socio)
+            }
+            else {
+                val socio = raNoSocio.text.toString()
+                intent.putExtra("socio", socio)
+            }
             // Iniciar la Activity
             startActivity(intent)
         }
