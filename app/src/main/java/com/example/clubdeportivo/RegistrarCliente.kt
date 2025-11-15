@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.graphics.Color
 import android.os.Build
 import android.util.Log
+import android.widget.RadioGroup
 import androidx.annotation.RequiresApi
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -43,13 +44,12 @@ class RegistrarCliente : BaseActivity() {
         val chApto = findViewById<CheckBox>(R.id.check_apto_medico)
         val raSocio = findViewById<RadioButton>(R.id.btnSocio)
         val raNoSocio = findViewById<RadioButton>(R.id.btnNoSocio)
-
+        val grupoSocio = findViewById<RadioGroup>(R.id.grupoSocio)
 
         // OBTENGO BOTON REGISTRAR
         val btnRegistrar = findViewById<Button>(R.id.btnRegistrar)
         btnRegistrar.isEnabled = false
         btnRegistrar.backgroundTintList = ColorStateList.valueOf("#BDBDBD".toColorInt())
-
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -92,12 +92,29 @@ class RegistrarCliente : BaseActivity() {
             val fechaInscripcion = LocalDate.now().toString()
             val isSocio = if (raSocio.isChecked) true else false
             val nuevoCliente: Cliente = Cliente(
-                null, nombre,dniCheck, telCheck, emailCheck, aptoCheck, fechaInscripcion, isSocio )
+                null, nombre,dniCheck, telCheck, emailCheck, aptoCheck, fechaInscripcion, isSocio, carnet = false )
             // REGISTRO DE NUEVO CLIENTE
             dbHelper.agregarCliente(nuevoCliente)
-
+            // LIMPIO LOS CAMPOS COMPLETADOS
+            etNombre.text.clear()
+            etDNI.text.clear()
+            etTelefono.text.clear()
+            etEmail.text.clear()
+            chApto.isChecked = false
+            grupoSocio.clearCheck()
             // Crear el Intent == "intención" de hacer algo (abrir DashboardActivity)
             val intent = Intent(this, RegistroExitoso::class.java)
+            //Pasa los datos del nuevo cliente a la vista RegistroExitoso
+            intent.putExtra("nombre", nombre)
+            //Corrobora si se trata de Socio o NoSocio y pasa valor del tipo de cliente a la vista RegistroExitoso
+            if(isSocio) {
+                val socio = raSocio.text.toString()
+                intent.putExtra("socio", socio)
+            }
+            else {
+                val socio = raNoSocio.text.toString()
+                intent.putExtra("socio", socio)
+            }
             // Iniciar la Activity
             startActivity(intent)
         }

@@ -14,7 +14,7 @@ class Carnet : BaseActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_carnet)
-        val client = intent.getParcelableExtra<Client>("client_to_print")
+        val client = intent.getParcelableExtra<Cliente>("client_to_print")
         // Esto ajusta los bordes del layout para pantallas modernas
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -31,9 +31,7 @@ class Carnet : BaseActivity() {
 
         // -----SETEAR LOS DATOS EN EL CARNET -----//
         val nameClient = findViewById<TextView>(R.id.txtNombre)
-        nameClient?.text ="${client?.name}"
-        val lastNameClient = findViewById<TextView>(R.id.txtApellido)
-        lastNameClient?.text = "${client?.lastName}"
+        nameClient?.text ="${client?.nombre}"
         val dniClient = findViewById<TextView>(R.id.tv_dni)
         dniClient?.text = "${client?.dni}"
 

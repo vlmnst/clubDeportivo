@@ -3,6 +3,8 @@ package com.example.clubdeportivo
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.AdapterView
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
@@ -15,15 +17,25 @@ class SelectorView @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyleAttr) {
     private val label: TextView
     private val spinner: Spinner
+    private var optionSelectedListener: ((selectedOption: String) -> Unit)? = null
 
     init {
         // Inflamos el layout que hicimos (view_selector.xml)
         LayoutInflater.from(context).inflate(R.layout.view_selector, this, true)
-
         orientation = VERTICAL
-
         label = findViewById(R.id.selector_label)
         spinner = findViewById(R.id.selector_spinner)
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedOption = parent?.getItemAtPosition(position).toString()
+                optionSelectedListener?.invoke(selectedOption)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // No es necesario implementar nada aquí para el filtrado.
+            }
+        }
     }
 
     // Función para setear el texto del label (ej: "País", "Provincia")
@@ -45,4 +57,9 @@ class SelectorView @JvmOverloads constructor(
     fun getSelected(): String {
         return spinner.selectedItem?.toString() ?: ""
     }
+
+    fun setOnOptionSelectedListener(listener: (selectedOption: String) -> Unit) {
+        this.optionSelectedListener = listener
+    }
+
 }

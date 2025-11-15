@@ -53,55 +53,50 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:padding="5dp">
+            android:padding="5dp"
+            android:layout_marginBottom="5dp">
 
             <EditText
                 android:id="@+id/edit_nombre_apellido"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
-                android:background="@drawable/ingreso_datos"
                 android:gravity="center"
                 android:hint="Nombre y Apellido"
                 android:padding="10dp"
-                android:textColorHint="#FFFFFF"
-
-                />
+                 />
 
             <EditText
                 android:id="@+id/edit_dni"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
-                android:background="@drawable/ingreso_datos"
                 android:gravity="center"
                 android:hint="DNI"
                 android:inputType="number"
                 android:padding="10dp"
-                android:textColorHint="#FFFFFF" />
+                />
 
             <EditText
                 android:id="@+id/edit_telefono"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
-                android:background="@drawable/ingreso_datos"
                 android:gravity="center"
                 android:hint="Telefono"
                 android:inputType="phone"
                 android:padding="10dp"
-                android:textColorHint="#FFFFFF" />
+                />
 
             <EditText
                 android:id="@+id/edit_correo_electronico"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ingreso_datos"
                 android:gravity="center"
                 android:hint="Correo electrónico"
                 android:inputType="textEmailAddress"
                 android:padding="10dp"
-                android:textColorHint="#FFFFFF" />
+                />
 
 
         </LinearLayout>
@@ -112,7 +107,6 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-
             <CheckBox
                 android:id="@+id/check_apto_medico"
                 android:layout_width="wrap_content"
@@ -122,7 +116,8 @@
                 android:layoutDirection="rtl"
                 android:text="Posee apto médico"
                 android:textSize="18sp"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                />
 
         </LinearLayout>
 
@@ -133,6 +128,7 @@
             android:orientation="vertical">
 
             <RadioGroup
+                android:id="@+id/grupoSocio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
