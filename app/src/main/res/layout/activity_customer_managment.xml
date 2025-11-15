@@ -37,11 +37,13 @@
         android:paddingTop="22dp">
 
         <EditText
-            android:id="@+id/edit_text_uno"
+            android:id="@+id/input_dni_filter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:hint="@string/ingresa_en_dni_a_gestionar" />
+            android:autofillHints=""
+            android:inputType="number"
+            android:hint="@string/ingresa_el_dni_a_gestionar" />
 
     </LinearLayout>
 

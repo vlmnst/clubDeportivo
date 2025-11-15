@@ -2,9 +2,12 @@ package com.example.clubdeportivo
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -24,9 +27,11 @@ import kotlin.math.ceil
 class CustomerManagmentActivity : BaseActivity() {
 
     private var showCardEmpty = true
-    private lateinit var listCompleteClients: List<Cliente>
     private lateinit var clientAdapter: ClientAdapter
+    private val allClients: List<Cliente> by lazy { dbHelper.obtenerClientes() }
     val dbHelper = BDatos(this)
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -36,18 +41,34 @@ class CustomerManagmentActivity : BaseActivity() {
 
         // ----- INFO MOCK LISTADO -----//
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_clients)
-        listCompleteClients = dbHelper.obtenerClientes()
-
-
-        //LLAMA A LA FUNCION DE LA BASEACTIVITY (nav menu)
-        setupNavigationDrawer()
-        clientAdapter = ClientAdapter(listCompleteClients) {
-            client -> showDialogClient(client)
+        // ADAPTER PARA RENDERIZAR LOS CLIENTES
+        clientAdapter = ClientAdapter(allClients) {
+                client -> showDialogClient(client)
         }
         recyclerView.adapter = clientAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
+        // VARIABLES PARA LOS FILTROS
+        val inputDniFilter = findViewById<EditText>(R.id.input_dni_filter)
+        val watcher = object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val searchDni = s.toString().trim()
+                if (searchDni.isEmpty()) {
+                    clientAdapter.updateDataClients(allClients)
+                } else {
+                    val filteredList = allClients.filter { client ->
+                        client.dni.contains(searchDni, ignoreCase = true)
+                    }
+                    clientAdapter.updateDataClients(filteredList)
+                }
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        }
+        inputDniFilter.addTextChangedListener(watcher)
 
+        //LLAMA A LA FUNCION DE LA BASEACTIVITY (nav menu)
+        setupNavigationDrawer()
 
         // --- SELECTORES ----- //
         val selectorClient = findViewById<SelectorView>(R.id.selector_cliente)
@@ -93,7 +114,7 @@ class CustomerManagmentActivity : BaseActivity() {
             // --------- EMPTY AND FULL CLIENTS CARDS --------- //
             val cardEmpty = findViewById<MaterialCardView>(R.id.card_empty_clients)
             val cardFull = findViewById<MaterialCardView>(R.id.card_full_clients)
-            if(listCompleteClients.isNotEmpty()) {
+            if(allClients.isNotEmpty()) {
                 showCardEmpty = !showCardEmpty
                 if (showCardEmpty) {
                     // Si se está mostrando la Card A, la ocultamos y mostramos la B
