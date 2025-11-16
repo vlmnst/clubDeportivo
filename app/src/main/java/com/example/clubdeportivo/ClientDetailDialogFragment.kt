@@ -61,10 +61,12 @@ class ClientDetailDialogFragment : DialogFragment() {
             btnCobrarActividad.visibility = View.GONE
 
             // Calculo fecha de vencimiento
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            val fecha = LocalDate.parse(client.fecha_inscripcion, formatter)
-            val fechaVencimiento = fecha.plusMonths(1)
-            tvVencimiento.text = "Vto de la cuota: ${fechaVencimiento}"
+            if(client.fechaPagoDeMes != null) {
+                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                val fecha = LocalDate.parse(client.fechaPagoDeMes, formatter)
+                val fechaVencimiento = fecha.plusMonths(1)
+                tvVencimiento.text = "Vto de la cuota: ${fechaVencimiento}"
+            }
 
             btnPrintID.setOnClickListener {
                 val intent = Intent(requireContext(), Carnet::class.java).apply{
