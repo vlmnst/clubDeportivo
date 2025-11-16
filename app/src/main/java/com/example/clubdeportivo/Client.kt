@@ -1,6 +1,7 @@
 package com.example.clubdeportivo
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.time.LocalDate
 
 @Parcelize
 data class Cliente(
@@ -13,4 +14,5 @@ data class Cliente(
     val fecha_inscripcion: String, // Formato "AAAA-MM-DD"
     val socio: Boolean,
     val carnet: Boolean,
+    val fechaPagoDeMes: String? = null, // Formato "AAAA-MM-DD"
 ) : Parcelable

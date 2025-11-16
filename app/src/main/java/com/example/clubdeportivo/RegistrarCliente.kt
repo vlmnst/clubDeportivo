@@ -90,9 +90,13 @@ class RegistrarCliente : BaseActivity() {
             val emailCheck = etEmail.text.toString()
             val aptoCheck = chApto.isChecked
             val fechaInscripcion = LocalDate.now().toString()
-            val isSocio = if (raSocio.isChecked) true else false
-            val nuevoCliente: Cliente = Cliente(
-                null, nombre,dniCheck, telCheck, emailCheck, aptoCheck, fechaInscripcion, isSocio, carnet = false )
+            val isSocio = raSocio.isChecked
+
+            val nuevoCliente = Cliente(
+                null, nombre,dniCheck, telCheck, emailCheck,
+                aptoCheck, fechaInscripcion, isSocio,
+                carnet = false )
+
             // REGISTRO DE NUEVO CLIENTE
             dbHelper.agregarCliente(nuevoCliente)
             // LIMPIO LOS CAMPOS COMPLETADOS
@@ -102,19 +106,15 @@ class RegistrarCliente : BaseActivity() {
             etEmail.text.clear()
             chApto.isChecked = false
             grupoSocio.clearCheck()
+
             // Crear el Intent == "intención" de hacer algo (abrir DashboardActivity)
             val intent = Intent(this, RegistroExitoso::class.java)
             //Pasa los datos del nuevo cliente a la vista RegistroExitoso
             intent.putExtra("nombre", nombre)
             //Corrobora si se trata de Socio o NoSocio y pasa valor del tipo de cliente a la vista RegistroExitoso
-            if(isSocio) {
-                val socio = raSocio.text.toString()
-                intent.putExtra("socio", socio)
-            }
-            else {
-                val socio = raNoSocio.text.toString()
-                intent.putExtra("socio", socio)
-            }
+            val textTypeClient = if (isSocio) raSocio.text.toString() else raNoSocio.text.toString()
+            intent.putExtra("socio", textTypeClient)
+
             // Iniciar la Activity
             startActivity(intent)
         }

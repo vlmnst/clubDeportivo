@@ -41,7 +41,7 @@
         android:id="@+id/tv_vencimiento_cuota"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Vto de la cuota: 05/10/25"
+        android:text="Éste socio aún no registra un primer pago"
         android:visibility="gone"
         android:layout_marginBottom="8dp"/>
 

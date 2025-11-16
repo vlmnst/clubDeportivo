@@ -1,6 +1,7 @@
 package com.example.clubdeportivo
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,6 +13,7 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -20,13 +22,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneId
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import kotlin.math.ceil
 
 class CustomerManagmentActivity : BaseActivity() {
 
-    private var showCardEmpty = true
     private lateinit var clientAdapter: ClientAdapter
     private lateinit var dbHelper: BDatos
     private lateinit var allClients: List<Cliente>
@@ -60,6 +64,8 @@ class CustomerManagmentActivity : BaseActivity() {
         val inputDniFilter = findViewById<EditText>(R.id.input_dni_filter)
         val watcher = object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
+                currentStartDateFilter = null
+                currentEndDateFilter = null
                 currentDniFilter = s.toString().trim()
                 applyFilters()
             }
@@ -78,8 +84,9 @@ class CustomerManagmentActivity : BaseActivity() {
         selectorClient.setLabel("Filtrar por cliente:")
         val optionClient = listOf("Todos", "Socio", "No Socio")
         selectorClient.setOptions(optionClient)
-        val typeClientSelect = selectorClient.getSelected()
         selectorClient.setOnOptionSelectedListener{ selectedOption ->
+            currentStartDateFilter = null
+            currentEndDateFilter = null
             currentClientTypeFilter = selectedOption
             applyFilters()
         }
@@ -88,7 +95,9 @@ class CustomerManagmentActivity : BaseActivity() {
         val optionCarnet = listOf("Todos", "Con carnet", "Sin Carnet")
         selectorCarnet.setOptions(optionCarnet)
         selectorCarnet.setOnOptionSelectedListener{ selectedOption ->
-            currentClientTypeFilter = selectedOption
+            currentStartDateFilter = null
+            currentEndDateFilter = null
+            currentCarnetFilter = selectedOption
             applyFilters()
         }
 
@@ -108,16 +117,18 @@ class CustomerManagmentActivity : BaseActivity() {
             // 4. Escuchar cuando el usuario presiona "OK"
             datePicker.addOnPositiveButtonClickListener { selection ->
                 // 'selection' es un Pair<Long, Long> con las fechas de inicio y fin en milisegundos
-                val startDate = selection.first
-                val endDate = selection.second
+                currentStartDateFilter = selection.first
+                currentEndDateFilter = selection.second
 
                 // Formatear las fechas para mostrarlas en el botón
-                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val startDateString = sdf.format(Date(startDate))
-                val endDateString = sdf.format(Date(endDate))
+                val sdf = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+                val startDateString = sdf.format(Date(currentStartDateFilter!!))
+                val endDateString = sdf.format(Date(currentEndDateFilter!!))
 
                 // Actualizar el texto del botón con el rango seleccionado
                 buttonDatePicker.text = "$startDateString - $endDateString"
+                applyFilters()
+
             }
         }
 
@@ -173,9 +184,30 @@ class CustomerManagmentActivity : BaseActivity() {
 
         // FILTRO CARNET: Usamos la variable de estado actualizada
         filteredList = when (currentCarnetFilter) {
-            "Con carnet" -> filteredList.filter { it.carnet != null }
-            "Sin Carnet" -> filteredList.filter { it.carnet == null }
+            "Con carnet" -> filteredList.filter { it.carnet }
+            "Sin Carnet" -> filteredList.filter { !it.carnet }
             else -> filteredList
+        }
+
+        // FILTRO DATE PICKER
+        if (currentStartDateFilter != null && currentEndDateFilter != null) {
+            val start = currentStartDateFilter!!
+            val end = currentEndDateFilter!!
+            filteredList = filteredList.filter { cliente ->
+                val fechaVencimiento = this.dateStringToLong(cliente.fechaPagoDeMes)
+                fechaVencimiento != null && fechaVencimiento >= start && fechaVencimiento <= end
+            }
+        }
+
+        // FILTRO CHECK BOX VTOS DEL DÍA
+        if (filterVtosToday) {
+            val (todayStart, todayEnd) = getTodayDateRange()
+            filteredList = filteredList.filter { cliente ->
+                val fechaVencimiento = this.dateStringToLong(cliente.fechaPagoDeMes)
+                fechaVencimiento != null &&
+                fechaVencimiento >= todayStart &&
+                fechaVencimiento <= todayEnd
+            }
         }
 
         // Finalmente, actualizamos la vista con el resultado
@@ -194,6 +226,39 @@ class CustomerManagmentActivity : BaseActivity() {
             cardFull.visibility = View.GONE
         }
     }
+
+    private fun dateStringToLong(dateString: String? = null, format: String = "yyyy/MM/dd"): Long? {
+        if (dateString == null ) return null
+        // 1. Crear el objeto SimpleDateFormat con el formato de tu String
+        val formatter = SimpleDateFormat(format, Locale.getDefault())
+
+        // 2. Intentar parsear el String a un objeto Date
+        return try {
+            val date = formatter.parse(dateString)
+            // 3. Convertir el objeto Date a Long (milisegundos)
+            date?.time
+        } catch (e: Exception) {
+            // Manejar el caso de que el String no coincida con el formato
+            e.printStackTrace()
+            null
+        }
+    }
+    private fun getTodayDateRange(): Pair<Long, Long> {
+        val calendarStart = Calendar.getInstance()
+        calendarStart.set(Calendar.HOUR_OF_DAY, 0)
+        calendarStart.set(Calendar.MINUTE, 0)
+        calendarStart.set(Calendar.SECOND, 0)
+        calendarStart.set(Calendar.MILLISECOND, 0)
+
+        val todayStart = calendarStart.timeInMillis // 00:00:00.000 de hoy
+
+        // Final del día: Inicio de mañana - 1 milisegundo
+        val todayEnd = todayStart + (24 * 60 * 60 * 1000) - 1 // 23:59:59.999 de hoy
+
+        return Pair(todayStart, todayEnd)
+    }
+
+
     private fun showDialogClient(client: Cliente) {
         val dialog = ClientDetailDialogFragment.newInstance(client)
         dialog.show(supportFragmentManager, "ClientDetailDialog")
