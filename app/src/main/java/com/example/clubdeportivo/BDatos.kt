@@ -41,7 +41,9 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
                 "email TEXT, " +
                 "apto INTEGER DEFAULT 0, " + // booleanos INTEGER (0=false, 1=true)
                 "fecha_inscripcion TEXT NOT NULL, " + // TEXTO - 2025-07-14 (año-mes-dia)
-                "socio INTEGER NOT NULL DEFAULT 0" +  // 0=false, 1=true
+                "socio INTEGER NOT NULL DEFAULT 0," +  // 0=false, 1=true
+                "carnet INTEGER NOT NULL DEFAULT 0," +
+                "fecha_pago_de_mes TEXT DEFAULT NULL" +
                 ")"
 
         // Ejecutar la sentencia (tabla cliente=)
@@ -63,7 +65,6 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
         db?.insert("Usuario", null, valores)
     }
 
-
     // AGREGAR UN NUEVO CLIENTE
     fun agregarCliente(cliente: Cliente): Boolean {
         val db = this.writableDatabase
@@ -77,6 +78,7 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
                 put("apto", if (cliente.apto) 1 else 0)
                 put("fecha_inscripcion", cliente.fecha_inscripcion)
                 put("socio", if (cliente.socio) 1 else 0)
+                put("carnet", if(cliente.carnet) 1 else 0)
                 put("fecha_pago_de_mes", cliente.fechaPagoDeMes)
             }
 
@@ -218,6 +220,18 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
         db.close()
         return lista
     }
+
+    fun resetDatabase() {
+        val db = writableDatabase
+
+        db.execSQL("DROP TABLE IF EXISTS $TABLA_CLIENTE")
+        // Agregá todos los DROP que necesites
+
+        onCreate(db)  // vuelve a crear las tablas
+
+        db.close()
+    }
+
 
 
 }
