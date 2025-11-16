@@ -2,7 +2,7 @@
     <string name="app_name">Club Deportivo</string>
     <string name="title_activity_menu_principal">MenuPrincipal</string>
     <string name="ingresa_el_dni_a_gestionar">Ingresa el DNI a gestionar</string>
-    <string name="dd_mm_yyyy_dd_mm_yyyy">dd/mm/yyyy - dd/mm/yyyy</string>
+    <string name="dd_mm_yyyy_dd_mm_yyyy">yyyy/mm/dd - yyyy/mm/dd</string>
     <string name="vtos_del_dia">Vencimientos del día</string>
     <string name="clientes">Clientes:</string>
 </resources>

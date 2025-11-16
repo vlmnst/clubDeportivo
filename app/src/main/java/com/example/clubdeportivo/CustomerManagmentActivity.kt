@@ -60,6 +60,8 @@ class CustomerManagmentActivity : BaseActivity() {
         val inputDniFilter = findViewById<EditText>(R.id.input_dni_filter)
         val watcher = object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
+                currentStartDateFilter = null
+                currentEndDateFilter = null
                 currentDniFilter = s.toString().trim()
                 applyFilters()
             }
@@ -79,6 +81,8 @@ class CustomerManagmentActivity : BaseActivity() {
         val optionClient = listOf("Todos", "Socio", "No Socio")
         selectorClient.setOptions(optionClient)
         selectorClient.setOnOptionSelectedListener{ selectedOption ->
+            currentStartDateFilter = null
+            currentEndDateFilter = null
             currentClientTypeFilter = selectedOption
             applyFilters()
         }
@@ -87,6 +91,8 @@ class CustomerManagmentActivity : BaseActivity() {
         val optionCarnet = listOf("Todos", "Con carnet", "Sin Carnet")
         selectorCarnet.setOptions(optionCarnet)
         selectorCarnet.setOnOptionSelectedListener{ selectedOption ->
+            currentStartDateFilter = null
+            currentEndDateFilter = null
             currentCarnetFilter = selectedOption
             applyFilters()
         }
@@ -107,16 +113,18 @@ class CustomerManagmentActivity : BaseActivity() {
             // 4. Escuchar cuando el usuario presiona "OK"
             datePicker.addOnPositiveButtonClickListener { selection ->
                 // 'selection' es un Pair<Long, Long> con las fechas de inicio y fin en milisegundos
-                val startDate = selection.first
-                val endDate = selection.second
+                currentStartDateFilter = selection.first
+                currentEndDateFilter = selection.second
 
                 // Formatear las fechas para mostrarlas en el botón
-                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val startDateString = sdf.format(Date(startDate))
-                val endDateString = sdf.format(Date(endDate))
+                val sdf = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+                val startDateString = sdf.format(Date(currentStartDateFilter!!))
+                val endDateString = sdf.format(Date(currentEndDateFilter!!))
 
                 // Actualizar el texto del botón con el rango seleccionado
                 buttonDatePicker.text = "$startDateString - $endDateString"
+                applyFilters()
+
             }
         }
 
@@ -177,6 +185,17 @@ class CustomerManagmentActivity : BaseActivity() {
             else -> filteredList
         }
 
+        // FILTRO DATE PICKER
+        if (currentStartDateFilter != null && currentEndDateFilter != null) {
+            val start = currentStartDateFilter!!
+            val end = currentEndDateFilter!!
+            filteredList = filteredList.filter { cliente ->
+                val fechaVencimiento = this.dateStringToLong(cliente.fechaPagoDeMes)
+                Log.d("fecha de vencimiento", fechaVencimiento.toString())
+                fechaVencimiento != null && fechaVencimiento >= start && fechaVencimiento <= end
+            }
+        }
+
         // Finalmente, actualizamos la vista con el resultado
         clientAdapter.updateDataClients(filteredList)
         updateCardVisibility(filteredList.isNotEmpty())
@@ -191,6 +210,23 @@ class CustomerManagmentActivity : BaseActivity() {
         } else {
             cardEmpty.visibility = View.VISIBLE
             cardFull.visibility = View.GONE
+        }
+    }
+
+    private fun dateStringToLong(dateString: String? = null, format: String = "yyyy/MM/dd"): Long? {
+        if (dateString == null ) return null
+        // 1. Crear el objeto SimpleDateFormat con el formato de tu String
+        val formatter = SimpleDateFormat(format, Locale.getDefault())
+
+        // 2. Intentar parsear el String a un objeto Date
+        return try {
+            val date = formatter.parse(dateString)
+            // 3. Convertir el objeto Date a Long (milisegundos)
+            date?.time
+        } catch (e: Exception) {
+            // Manejar el caso de que el String no coincida con el formato
+            e.printStackTrace()
+            null
         }
     }
     private fun showDialogClient(client: Cliente) {
