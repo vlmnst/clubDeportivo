@@ -1,6 +1,7 @@
 package com.example.clubdeportivo
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,6 +13,7 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -20,13 +22,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneId
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import kotlin.math.ceil
 
 class CustomerManagmentActivity : BaseActivity() {
 
-    private var showCardEmpty = true
     private lateinit var clientAdapter: ClientAdapter
     private lateinit var dbHelper: BDatos
     private lateinit var allClients: List<Cliente>
@@ -191,8 +195,18 @@ class CustomerManagmentActivity : BaseActivity() {
             val end = currentEndDateFilter!!
             filteredList = filteredList.filter { cliente ->
                 val fechaVencimiento = this.dateStringToLong(cliente.fechaPagoDeMes)
-                Log.d("fecha de vencimiento", fechaVencimiento.toString())
                 fechaVencimiento != null && fechaVencimiento >= start && fechaVencimiento <= end
+            }
+        }
+
+        // FILTRO CHECK BOX VTOS DEL DÍA
+        if (filterVtosToday) {
+            val (todayStart, todayEnd) = getTodayDateRange()
+            filteredList = filteredList.filter { cliente ->
+                val fechaVencimiento = this.dateStringToLong(cliente.fechaPagoDeMes)
+                fechaVencimiento != null &&
+                fechaVencimiento >= todayStart &&
+                fechaVencimiento <= todayEnd
             }
         }
 
@@ -229,6 +243,22 @@ class CustomerManagmentActivity : BaseActivity() {
             null
         }
     }
+    private fun getTodayDateRange(): Pair<Long, Long> {
+        val calendarStart = Calendar.getInstance()
+        calendarStart.set(Calendar.HOUR_OF_DAY, 0)
+        calendarStart.set(Calendar.MINUTE, 0)
+        calendarStart.set(Calendar.SECOND, 0)
+        calendarStart.set(Calendar.MILLISECOND, 0)
+
+        val todayStart = calendarStart.timeInMillis // 00:00:00.000 de hoy
+
+        // Final del día: Inicio de mañana - 1 milisegundo
+        val todayEnd = todayStart + (24 * 60 * 60 * 1000) - 1 // 23:59:59.999 de hoy
+
+        return Pair(todayStart, todayEnd)
+    }
+
+
     private fun showDialogClient(client: Cliente) {
         val dialog = ClientDetailDialogFragment.newInstance(client)
         dialog.show(supportFragmentManager, "ClientDetailDialog")
