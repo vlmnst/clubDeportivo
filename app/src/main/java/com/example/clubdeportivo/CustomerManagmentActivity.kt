@@ -78,7 +78,6 @@ class CustomerManagmentActivity : BaseActivity() {
         selectorClient.setLabel("Filtrar por cliente:")
         val optionClient = listOf("Todos", "Socio", "No Socio")
         selectorClient.setOptions(optionClient)
-        val typeClientSelect = selectorClient.getSelected()
         selectorClient.setOnOptionSelectedListener{ selectedOption ->
             currentClientTypeFilter = selectedOption
             applyFilters()
@@ -88,7 +87,7 @@ class CustomerManagmentActivity : BaseActivity() {
         val optionCarnet = listOf("Todos", "Con carnet", "Sin Carnet")
         selectorCarnet.setOptions(optionCarnet)
         selectorCarnet.setOnOptionSelectedListener{ selectedOption ->
-            currentClientTypeFilter = selectedOption
+            currentCarnetFilter = selectedOption
             applyFilters()
         }
 
@@ -173,8 +172,8 @@ class CustomerManagmentActivity : BaseActivity() {
 
         // FILTRO CARNET: Usamos la variable de estado actualizada
         filteredList = when (currentCarnetFilter) {
-            "Con carnet" -> filteredList.filter { it.carnet != null }
-            "Sin Carnet" -> filteredList.filter { it.carnet == null }
+            "Con carnet" -> filteredList.filter { it.carnet }
+            "Sin Carnet" -> filteredList.filter { !it.carnet }
             else -> filteredList
         }
 
