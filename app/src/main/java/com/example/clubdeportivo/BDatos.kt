@@ -77,6 +77,7 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
                 put("apto", if (cliente.apto) 1 else 0)
                 put("fecha_inscripcion", cliente.fecha_inscripcion)
                 put("socio", if (cliente.socio) 1 else 0)
+                put("fecha_pago_de_mes", cliente.fechaPagoDeMes)
             }
 
             try {
@@ -121,7 +122,8 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
                     apto = it.getInt(it.getColumnIndexOrThrow("apto")) == 1, // Convierte Integer a Boolean
                     fecha_inscripcion = it.getString(it.getColumnIndexOrThrow("fecha_inscripcion")),
                     socio = it.getInt(it.getColumnIndexOrThrow("socio")) == 1, // Convierte Integer a Boolean
-                    carnet = it.getInt(it.getColumnIndexOrThrow("carnet")) == 1
+                    carnet = it.getInt(it.getColumnIndexOrThrow("carnet")) == 1,
+                    fechaPagoDeMes = it.getString(it.getColumnIndexOrThrow("fecha_pago_de_mes"))
                 )
             }
         }
@@ -204,8 +206,10 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
                 val fecha = cursor.getString(cursor.getColumnIndexOrThrow("fecha_inscripcion"))
                 val apto = cursor.getInt(cursor.getColumnIndexOrThrow("apto")) == 1
                 val socio = cursor.getInt(cursor.getColumnIndexOrThrow("socio")) == 1
+                val carnet = cursor.getInt(cursor.getColumnIndexOrThrow("carnet")) == 1
+                val fechaPagoDeMes = cursor.getString(cursor.getColumnIndexOrThrow("fecha_pago_de_mes"))
 
-                val cliente = Cliente(id, nombre, dni, telefono, email, apto, fecha, socio, carnet = false)
+                val cliente = Cliente(id, nombre, dni, telefono, email, apto, fecha, socio, carnet, fechaPagoDeMes)
                 lista.add(cliente)
             } while (cursor.moveToNext())
         }
