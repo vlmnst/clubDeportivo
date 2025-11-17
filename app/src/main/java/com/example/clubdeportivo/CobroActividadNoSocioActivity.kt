@@ -32,13 +32,19 @@ class CobroActividadNoSocioActivity : BaseActivity() {
 
         btnRegistrarPago.setOnClickListener {
             val simpleDialog: AlertDialog = AlertDialog.Builder(this)
-                .setTitle("Cobro cuota socios")
+                .setTitle("Cobro Actividad No Socio")
                 .setMessage("¿Desea registrar el pago?")
                 .setPositiveButton("ACEPTAR") { dialog, which ->
                     //Va a una nueva pantalla
-                    val intent = Intent(this, ConfirmacionCobroActividadActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    //val intent = Intent(this, ConfirmacionCobroActividadActivity::class.java)
+                    //startActivity(intent)
+                    Toast.makeText(this@CobroActividadNoSocioActivity, "Pago acreditado correctamente", Toast.LENGTH_LONG).show()
+                    val spinner: Spinner = findViewById(R.id.SpinnerActividades)
+                    spinner.setSelection(0)
+
+                    // 3. Cierra el diálogo
+                    dialog.dismiss()
+                    //finish()
                 }
                 .setNegativeButton("CANCELAR") { dialog, which ->
                     dialog.dismiss()
