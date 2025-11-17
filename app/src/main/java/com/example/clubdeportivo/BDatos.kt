@@ -9,9 +9,10 @@ import android.util.Log
 
 // nombre de la DB
 private val BD = "BaseDatosClub"
-private val VERSION = 1
+private val VERSION = 2
 private const val TABLA_USUARIO = "Usuario"
 private const val TABLA_CLIENTE = "Cliente"
+private const val TABLA_SERVICIOS = "Servicios"
 
 
 // clase BDatos SQLiteOpenHelper
@@ -48,7 +49,22 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
 
         // Ejecutar la sentencia (tabla cliente=)
         db?.execSQL(crearTablaClienteSql)
+
+        //Tabla Servicios
+        val crearTablaServiciosSql = "CREATE TABLE IF NOT EXISTS $TABLA_SERVICIOS (" +
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "tipo_servicio TEXT NOT NULL, " +
+                "monto TEXT NOT NULL" +
+                ")"
+
+        //Ejecutar la sentencia (tabla servicios)
+        db?.execSQL(crearTablaServiciosSql)
+
+        //insertar los servicios
+        insertarServicios(db)
     }
+
+
 
     // obligatorio y para pruebas?
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -63,6 +79,54 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
         valores.put("clave", "1234")
 
         db?.insert("Usuario", null, valores)
+    }
+
+    //Crear los distintos servicios//
+
+    private fun insertarServicios(db: SQLiteDatabase?) {
+        val servicios = listOf(
+            Pair ("Cuota Socio", "35000"),
+            Pair ("Zumba", "3000"),
+            Pair ("Funcional", "3500"),
+            Pair ("Pilates", "4000"),
+            Pair ("Musculación", "3500")
+        )
+
+        servicios.forEach { (tipo,monto) ->
+            val valores = ContentValues().apply {
+                put("tipo_servicio", tipo)
+                put("monto", monto)
+            }
+            db?.insert(TABLA_SERVICIOS, null, valores)
+        }
+    }
+
+    //obtener valor del monto//
+    fun obtenerMontoServicio(tipoServicio: String): String {
+        val db = readableDatabase
+        var monto = ""
+
+        val selection = "tipo_servicio = ?"
+        val selectionArgs = arrayOf(tipoServicio)
+
+        val cursor = db.query(
+            TABLA_SERVICIOS,      // tabla
+            arrayOf("monto"),     // columna a devolver
+            selection,            // WHERE tipo_servicio = ?
+            selectionArgs,        // argumentos del WHERE
+            null,                 // groupBy
+            null,                 // having
+            null                  // orderBy
+        )
+
+        cursor.use {
+            if (it.moveToFirst()) {
+                monto = it.getString(it.getColumnIndexOrThrow("monto"))
+            }
+        }
+
+        db.close()
+        return monto
     }
 
     // AGREGAR UN NUEVO CLIENTE
@@ -221,10 +285,33 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
         return lista
     }
 
+    fun agregarServicio(tipoServicio: String, monto: String) :Boolean{
+        val db = this.writableDatabase
+
+        return db.use { database ->
+            val valores = ContentValues().apply {
+                put("tipo_servicio", tipoServicio)
+                put("monto", monto)
+            }
+
+            try{
+                database.insertOrThrow(TABLA_SERVICIOS, null, valores)
+                true
+            } catch (e: Exception) {
+                Log.e("BDatos", "Error al agregar servicio : ${e.message}")
+                false
+            }
+        }
+    }
+
+
+
     fun resetDatabase() {
         val db = writableDatabase
 
         db.execSQL("DROP TABLE IF EXISTS $TABLA_CLIENTE")
+        db.execSQL("DROP TABLE IF EXISTS $TABLA_SERVICIOS")
+
         // Agregá todos los DROP que necesites
 
         onCreate(db)  // vuelve a crear las tablas
