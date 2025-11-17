@@ -11,10 +11,8 @@
     tools:context=".MenuPrincipal">
 
     <!-- CONTINUACIPN DEL COFDIGO!!! -->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    <LinearLayout
+        android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -45,6 +43,7 @@
             android:textStyle="bold" />
 
         <LinearLayout
+            android:id="@+id/liner_Carnet"
             android:layout_width="match_parent"
             android:layout_height="410dp"
             android:layout_marginLeft="20dp"
@@ -81,23 +80,12 @@
 
                     <TextView
                         android:id="@+id/txtNombre"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_width="177dp"
+                        android:layout_height="86dp"
                         android:layout_marginLeft="16dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="35dp"
                         android:layout_marginRight="16dp"
-                        android:text="Nombre"
-                        android:textColor="#002244"
-                        android:textSize="28sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/txtApellido"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
-                        android:text="Apellido"
+                        android:text="Nombre y apellido"
                         android:textColor="#002244"
                         android:textSize="28sp"
                         android:textStyle="bold" />
@@ -118,31 +106,39 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@android:drawable/edit_text"
-                    android:hint="Socio N°" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:text="Socio N°" />
 
                 <TextView
                     android:id="@+id/tv_dni"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@android:drawable/edit_text"
-                    android:hint="DNI" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:text="DNI" />
 
                 <TextView
                     android:id="@+id/tv_apto_fisico"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@android:drawable/edit_text"
-                    android:hint="Apto fisico" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:text="Apto fisico" />
 
                 <TextView
                     android:id="@+id/tv_fecha_inscripcion"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:background="@android:drawable/edit_text"
-                    android:hint="Fecha Inscripción" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:text="Fecha inscripción" />
 
             </LinearLayout>
         </LinearLayout>
@@ -157,16 +153,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:alpha="0.3"
-                    android:src="@drawable/logo"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/toolbar_container" />
 
                 <LinearLayout
                     android:layout_width="150dp"

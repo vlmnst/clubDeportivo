@@ -3,6 +3,7 @@ package com.example.clubdeportivo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
@@ -13,7 +14,7 @@ class Compartir : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_compartir)
-
+        val client = intent.getParcelableExtra<Cliente>("client_to_print")
         // Esto ajusta los bordes del layout para pantallas modernas
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -21,6 +22,10 @@ class Compartir : AppCompatActivity() {
             insets
         }
 
+
+        // -----SETEAR LOS DATOS EN EL compartir-----//
+        val nameClient = findViewById<TextView>(R.id.tv_nombre_compartir)
+        nameClient?.text ="${client?.nombre}"
         val whatsapp = findViewById<LinearLayout>(R.id.idWhatsapp)
         val gmail = findViewById<LinearLayout>(R.id.idGmail)
         val drive = findViewById<LinearLayout>(R.id.idDrive)
