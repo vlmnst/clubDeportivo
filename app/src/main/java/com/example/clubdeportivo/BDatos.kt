@@ -42,7 +42,7 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
                 "apto INTEGER DEFAULT 0, " + // booleanos INTEGER (0=false, 1=true)
                 "fecha_inscripcion TEXT NOT NULL, " + // TEXTO - 2025-07-14 (año-mes-dia)
                 "socio INTEGER NOT NULL DEFAULT 0," +  // 0=false, 1=true
-                "carnet INTEGER NOT NULL DEFAULT 0," +
+                "carnet INTEGER NOT NULL DEFAULT 0," + // 0=false, 1=true
                 "fecha_pago_de_mes TEXT DEFAULT NULL" +
                 ")"
 
@@ -219,6 +219,27 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
         cursor.close()
         db.close()
         return lista
+    }
+
+    fun carnetImpreso(socioID : Int): Boolean{
+        val db = this.writableDatabase
+
+        val valores = ContentValues().apply {
+            put("carnet", 1) //la columna carnet recibe 1 para true
+        }
+        val clausulaWhere = "ID=?"
+        val argumentosWhere = arrayOf(socioID.toString())
+
+        //actualizamos la bd
+
+        return db.use {
+            it.update(
+                TABLA_CLIENTE,
+                valores,
+                clausulaWhere,
+                argumentosWhere
+            )
+        } > 0
     }
 
     fun resetDatabase() {
