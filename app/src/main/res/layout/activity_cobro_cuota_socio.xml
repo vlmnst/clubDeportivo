@@ -31,7 +31,7 @@
         android:layout_height="match_parent"
         android:background="#E6F7FF"
         android:orientation="vertical"
-        android:paddingTop="20dp">
+        android:paddingTop="10dp">
 
         <!-- Encabezado -->
         <TextView
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
             android:text="Cobro Cuota Socio"
             android:textSize="22sp"
@@ -107,7 +107,6 @@
                android:layout_height="wrap_content"
                android:orientation="vertical"
                android:layout_gravity="center_vertical"
-               android:layout_marginTop="10dp"
                >
 
                <TextView
@@ -145,44 +144,134 @@
 
                </RadioGroup>
 
-               <!--Boton registro + imagen (al final btn no quedó sobre la imagen, ver lo de retirar frame-->
+                    <!-- OPCIONES TARJETA -->
+               <LinearLayout
+                   android:id="@+id/allForm"
+                   android:visibility="invisible"
+                   android:layout_width="350dp"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical"
+                   android:layout_gravity="center"
+                   android:layout_marginTop="10dp"
+                   android:layout_marginBottom="10dp">
 
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="20dp"
+                       android:text="Titular de la tarjeta"
+                       />
 
-                   <FrameLayout
+                   <EditText
+                       android:id="@+id/TitularTarjeta"
                        android:layout_width="match_parent"
-                       android:layout_height="match_parent">
+                       android:layout_height="40dp"
+                       android:layout_marginBottom="10dp"
+                       android:background="@android:drawable/edit_text"
+                       android:hint="Ej. Pablo Perez" />
 
-                       <!-- app:layout_constraintBottom_toBottomOf="parent"
-                           app:layout_constraintEnd_toEndOf="parent"
-                           app:layout_constraintStart_toStartOf="parent"
-                           app:layout_constraintTop_toBottomOf="@id/toolbar_container" /> -->
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="DNI del titular" />
 
+                   <EditText
+                       android:id="@+id/DNITitular"
+                       android:layout_width="match_parent"
+                       android:layout_height="40dp"
+                       android:layout_marginBottom="10dp"
+                       android:background="@android:drawable/edit_text"
+                       android:hint="Ej. 12.345.678" />
 
-                       <ImageView
-                           android:layout_width="400dp"
-                           android:layout_height="400dp"
-                           android:layout_gravity="center"
-                           android:layout_marginTop="100dp"
-                           android:alpha="0.3"
-                           android:scaleType="fitEnd"
-                           android:src="@drawable/logo" />
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="Número de tarjeta" />
 
+                   <EditText
+                       android:id="@+id/NumeroTarjeta"
+                       android:layout_width="match_parent"
+                       android:layout_height="40dp"
+                       android:layout_marginBottom="10dp"
+                       android:background="@android:drawable/edit_text"
+                       android:hint="XXXX XXXX XXXX XXXX" />
+
+                   <LinearLayout
+                       android:layout_width="350dp"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal"
+                       android:layout_gravity="center"
+                       android:weightSum="2">
+
+                       <TextView
+                           android:layout_width="0dp"
+                           android:layout_height="wrap_content"
+                           android:layout_weight="1"
+                           android:layout_marginEnd="8dp"
+                           android:text="Fecha de vencimiento"/>
+
+                       <!--Ver como agregar una alerta/dialogo explicando que es CVV-->
+                       <TextView
+                           android:layout_width="0dp"
+                           android:layout_height="wrap_content"
+                           android:layout_weight="1"
+                           android:layout_marginEnd="8dp"
+                           android:text="Código de seguridad"/>
+
+                   </LinearLayout>
+
+                   <!--A mejorar, ver de colocar desplegable en mes y año-->
+
+                   <LinearLayout
+                       android:layout_width="350dp"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal"
+                       android:layout_gravity="center"
+                       android:weightSum="2">
+
+                       <EditText
+                           android:id="@+id/FechaVencimiento"
+                           android:layout_width="0dp"
+                           android:layout_height="40dp"
+                           android:layout_weight="1"
+                           android:layout_marginEnd="8dp"
+                           android:background="@android:drawable/edit_text"
+                           android:hint=" Ej. MM/YYYY" />
+
+                       <!--Ver como agregar una alerta/dialogo explicando que es CVV-->
+                       <EditText
+                           android:id="@+id/CVVTarjeta"
+                           android:layout_width="0dp"
+                           android:layout_height="40dp"
+                           android:layout_weight="1"
+                           android:background="@android:drawable/edit_text"
+                           android:hint=" Ej. 123" />
+
+                   </LinearLayout>
+
+               </LinearLayout>
+
+               <!--Boton registro + imagen (al final btn no quedó sobre la imagen, ver lo de retirar frame-->
+               <View
+                   android:layout_width="match_parent"
+                   android:layout_height="0dp"
+                   android:layout_weight="1" />
                        <androidx.appcompat.widget.AppCompatButton
                        android:id="@+id/btnRegistrarPago"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
                        android:layout_gravity="center|top"
-                       android:layout_marginTop="50dp"
+                       android:layout_marginTop="20dp"
                        android:background="@drawable/btn_primario"
                        android:backgroundTint="@null"
                        android:paddingLeft="50dp"
                        android:paddingRight="50dp"
+                       android:layout_marginBottom="50dp"
                        android:text="Registrar Pago"
                        android:textColor="#FFFFFF"
                        android:textSize="18sp"
                        tools:ignore="InvalidId" />
 
-               </FrameLayout>
 
 
                </LinearLayout>

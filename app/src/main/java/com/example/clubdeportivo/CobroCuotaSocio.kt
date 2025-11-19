@@ -3,7 +3,9 @@ package com.example.clubdeportivo
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.RadioGroup
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -47,13 +49,14 @@ class CobroCuotaSocio : BaseActivity() {
         }
 
         val radioGroup: RadioGroup = findViewById(R.id.radioGroupPago)
+        val form = findViewById<LinearLayout>(R.id.allForm)
         radioGroup.setOnCheckedChangeListener { group,checkedId ->
             when (checkedId) {
                 R.id.btnTarjeta -> {
-                    val intent = Intent(this, CobroCuotaSocioTarjetaActivity::class.java)
-                    startActivity(intent)
+                    form.visibility = View.VISIBLE
                 }
                 R.id.btnEfectivo -> {
+                    form.visibility = View.GONE
 
                 }
             }

@@ -12,14 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ClubDeportivo">
         <activity
-            android:name=".ConfirmacionCobroActividadActivity"
-            android:exported="false" />
-        <activity
             android:name=".CobroActividadNoSocioActivity"
             android:exported="true" />
-        <activity
-            android:name=".CobroCuotaSocioTarjetaActivity"
-            android:exported="false" />
         <activity
             android:name=".ConfirmacionCobroSocioActivity"
             android:exported="false" />
