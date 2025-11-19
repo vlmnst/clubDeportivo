@@ -23,6 +23,10 @@ class CobroCuotaSocio : BaseActivity() {
             insets
         }
 
+        //Obtengo el nombre del cliente
+        val nombreCompleto = intent.getStringExtra("nombreCompleto")
+
+
         //LLAMA A LA FUNCION DE LA BASEACTIVITY (nav menu)
         setupNavigationDrawer()
 
@@ -36,6 +40,8 @@ class CobroCuotaSocio : BaseActivity() {
                 .setPositiveButton("ACEPTAR") { dialog, which ->
                     //Va a una nueva pantalla
                     val intent = Intent(this, ConfirmacionCobroSocioActivity::class.java)
+                    intent.putExtra("esSocio", true)
+                    intent.putExtra("nombreCompleto", nombreCompleto)
                     startActivity(intent)
                     finish()
                 }
