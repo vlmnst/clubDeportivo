@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -30,17 +31,17 @@ class CobroActividadNoSocioActivity : BaseActivity() {
 
         val btnRegistrarPago: Button = findViewById(R.id.btnRegistrarPago)
 
+        val nombreCompleto = intent.getStringExtra("nombreCompleto")
+
         btnRegistrarPago.setOnClickListener {
             val simpleDialog: AlertDialog = AlertDialog.Builder(this)
                 .setTitle("Cobro Actividad No Socio")
                 .setMessage("¿Desea registrar el pago?")
                 .setPositiveButton("ACEPTAR") { dialog, which ->
-                    //Va a una nueva pantalla
-                    //val intent = Intent(this, ConfirmacionCobroActividadActivity::class.java)
-                    //startActivity(intent)
-                    Toast.makeText(this@CobroActividadNoSocioActivity, "Pago acreditado correctamente", Toast.LENGTH_LONG).show()
-                    val spinner: Spinner = findViewById(R.id.SpinnerActividades)
-                    spinner.setSelection(0)
+
+                    val intent = Intent(this, ConfirmacionCobroSocioActivity::class.java)
+                    intent.putExtra("nombreCompleto", nombreCompleto)
+                    startActivity(intent)
 
                     // 3. Cierra el diálogo
                     dialog.dismiss()
