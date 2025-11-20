@@ -39,6 +39,8 @@ class CobroActividadNoSocioActivity : BaseActivity() {
                     //val intent = Intent(this, ConfirmacionCobroActividadActivity::class.java)
                     //startActivity(intent)
                     Toast.makeText(this@CobroActividadNoSocioActivity, "Pago acreditado correctamente", Toast.LENGTH_LONG).show()
+
+                    //VER PARA APLICAR CON RECYCLER VIEW Y TOMAR DE LA BD LAS ACTIVIDADES//
                     val spinner: Spinner = findViewById(R.id.SpinnerActividades)
                     spinner.setSelection(0)
 
@@ -54,40 +56,42 @@ class CobroActividadNoSocioActivity : BaseActivity() {
             simpleDialog.show()
 
         }
-        val spinner: Spinner = findViewById(R.id.SpinnerActividades)
-        val items =
-            listOf("Actividades disponibles, Funcional $2500", "Aerobox $3000", "Zumba $3000")
-
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        spinner.adapter = adapter
-
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (position == 0) {
-                    Toast.makeText(this@CobroActividadNoSocioActivity, "Por favor, seleccioná una actividad", Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-
-                    val selectedItem = items[position]
-                    Toast.makeText(this@CobroActividadNoSocioActivity, "Seleccionaste: $selectedItem", Toast.LENGTH_SHORT
-                    ).show()
 
 
-                }
-
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
+//        val spinner: Spinner = findViewById(R.id.SpinnerActividades)
+//        val items =
+//            listOf("Actividades disponibles", "Funcional $2500", "Aerobox $3000", "Zumba $3000")
+//
+//        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//
+//        spinner.adapter = adapter
+//
+//        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(
+//                parent: AdapterView<*>?,
+//                view: View?,
+//                position: Int,
+//                id: Long
+//            ) {
+//                if (position == 0) {
+//                    Toast.makeText(this@CobroActividadNoSocioActivity, "Por favor, seleccioná una actividad", Toast.LENGTH_SHORT
+//                    ).show()
+//                } else {
+//
+//                    val selectedItem = items[position]
+//                    Toast.makeText(this@CobroActividadNoSocioActivity, "Seleccionaste: $selectedItem", Toast.LENGTH_SHORT
+//                    ).show()
+//
+//
+//                }
+//
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//
+//            }
 
         }
     }
-}
+
