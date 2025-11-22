@@ -9,10 +9,10 @@ import android.util.Log
 
 // nombre de la DB
 private val BD = "BaseDatosClub"
-private val VERSION = 3
+private val VERSION = 4
 private const val TABLA_USUARIO = "Usuario"
 private const val TABLA_CLIENTE = "Cliente"
-private const val TABLA_SERVICIOS = "Actividad"
+private const val TABLA_SERVICIOS = "Servicios"
 
 
 // clase BDatos SQLiteOpenHelper
@@ -99,6 +99,34 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
             }
             db?.insert(TABLA_SERVICIOS, null, valores)
         }
+    }
+
+    fun obtenerListaServicios(): MutableList<String> {
+        val lista = mutableListOf<String>()
+        lista.add("Servicios disponibles") // Primer item por defecto
+
+        val db = readableDatabase
+        try {
+            // Consultamos la tabla 'Servicios' (que es la que usas en tu código restaurado)
+            val cursor = db.rawQuery("SELECT * FROM $TABLA_SERVICIOS", null)
+
+            if (cursor.moveToFirst()) {
+                do {
+                    // Obtenemos los datos de las columnas correctas
+                    val nombre = cursor.getString(cursor.getColumnIndexOrThrow("tipo_servicio"))
+                    val monto = cursor.getString(cursor.getColumnIndexOrThrow("monto"))
+
+                    // Formato: "Zumba $3000"
+                    lista.add("$nombre $$monto")
+                } while (cursor.moveToNext())
+            }
+            cursor.close()
+        } catch (e: Exception) {
+            Log.e("BDatos", "Error al obtener servicios: ${e.message}")
+        }
+
+        db.close()
+        return lista
     }
 
     //obtener valor del monto//
@@ -342,6 +370,5 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
 
 
 }
-
 
 
