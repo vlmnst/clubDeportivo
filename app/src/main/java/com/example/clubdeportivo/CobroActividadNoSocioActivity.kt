@@ -37,10 +37,15 @@ class CobroActividadNoSocioActivity : BaseActivity() {
 
         // ---Conecta con la DB ---
         val db = BDatos(this)
-        val listaServicios = db.obtenerListaServicios() // Llamamos a la nueva función
+        val listaCompleta = db.obtenerListaServicios() // extrae actividades
+
+        //filtra cuotoa socio
+        val listaFiltrada = listaCompleta.filter { item ->
+            !item.contains("Cuota Socio")
+        }
 
         // Creamos el adaptador con la lista que trajo de la DB
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listaServicios)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, listaFiltrada)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 
@@ -50,7 +55,7 @@ class CobroActividadNoSocioActivity : BaseActivity() {
                 if (position == 0) {
                     servicioSeleccionado = "" // "Servicios disponibles" no cuenta
                 } else {
-                    servicioSeleccionado = listaServicios[position]
+                    servicioSeleccionado = listaFiltrada[position]
                     // Opcional: Toast.makeText(applicationContext, "Elegiste: $servicioSeleccionado", Toast.LENGTH_SHORT).show()
                 }
             }
