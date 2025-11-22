@@ -8,7 +8,6 @@
     android:layout_height="match_parent"
     tools:context=".MenuPrincipal">
 
-    <!-- CONTENEDOR PRINCIPAL OBLIGATORIO -->
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
@@ -22,11 +21,8 @@
             android:background="#E6F7FF"
             tools:context=".CobroActividadNoSocioActivity">
 
-            <!-- Toolbar -->
-            <include
-                layout="@layout/toolbar_main" />
+            <include layout="@layout/toolbar_main" />
 
-            <!-- Título -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -40,76 +36,51 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="50dp"
-                android:layout_marginTop="15dp"
-                android:text="Seleccione la actividad a pagar:" />
+                android:layout_marginTop="30dp"
+                android:text="Seleccione la actividad a pagar:"
+                android:textSize="16sp"/>
 
-            <!-- LISTA -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvListaActividades"
+            <Spinner
+                android:id="@+id/SpinnerActividades"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="50dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"/>
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"/>
 
-            <!-- BOTONES SELECCIONAR + AGREGAR -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:padding="20dp">
-
-                <Button
-                    android:id="@+id/btnSeleccionar"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="10dp"
-                    android:text="Seleccionar"
-                    android:backgroundTint="#56A5D9"/>
-
-                <Button
-                    android:id="@+id/btnAgregar"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="10dp"
-                    android:text="Agregar"
-                    android:backgroundTint="#56A5D9"/>
-            </LinearLayout>
-
-            <!-- BOTÓN REGISTRAR PAGO -->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnRegistrarPago"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:paddingHorizontal="40dp"
+                android:paddingVertical="15dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="50dp"
                 android:background="@drawable/btn_primario"
+                android:backgroundTint="@null"
                 android:text="Registrar Pago"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp" />
 
-            <!-- IMAGEN AL FINAL -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
             <ImageView
-                android:layout_width="400dp"
-                android:layout_height="400dp"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
                 android:layout_gravity="center"
                 android:alpha="0.3"
                 android:src="@drawable/logo"
                 android:scaleType="fitCenter"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="-100dp" />
-            />
+                android:layout_marginBottom="-50dp" />
 
         </LinearLayout>
 
     </FrameLayout>
 
-    <!-- MENÚ LATERAL -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"

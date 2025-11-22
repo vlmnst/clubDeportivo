@@ -9,10 +9,10 @@ import android.util.Log
 
 // nombre de la DB
 private val BD = "BaseDatosClub"
-private val VERSION = 2
+private val VERSION = 3
 private const val TABLA_USUARIO = "Usuario"
 private const val TABLA_CLIENTE = "Cliente"
-private const val TABLA_SERVICIOS = "Servicios"
+private const val TABLA_SERVICIOS = "Actividad"
 
 
 // clase BDatos SQLiteOpenHelper
