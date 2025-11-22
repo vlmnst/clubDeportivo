@@ -37,6 +37,7 @@ class RegistroExitoso : BaseActivity() {
 
         //Modifica el valor del tvNombreApellido con lo que pasa el registro del cliente
         val usuario = intent.getStringExtra("nombre") ?: "Usuario" //Si el valor que me llega por parametro "usuario" es nulo, pone el String "Usuario"
+        val dni = intent.getStringExtra("DNI")
         tvNombreApellido.text = "$usuario"
 
         val cuotaActividad = tvSocioNoSocio.text.toString()
@@ -49,6 +50,7 @@ class RegistroExitoso : BaseActivity() {
             btnCobrar.setOnClickListener {
                 // Crea el Intent y realiza la conexion con la vista CobroCuotaSocio
                 val intent = Intent(this, CobroCuotaSocio::class.java)
+                intent.putExtra("DNI", dni)
                 startActivity(intent)
             }
         }
