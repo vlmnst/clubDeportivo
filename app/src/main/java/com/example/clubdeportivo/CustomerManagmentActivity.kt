@@ -195,7 +195,8 @@ class CustomerManagmentActivity : BaseActivity() {
             val end = currentEndDateFilter!!
             filteredList = filteredList.filter { cliente ->
                 val fechaVencimiento = this.dateStringToLong(cliente.fechaPagoDeMes)
-                fechaVencimiento != null && fechaVencimiento >= start && fechaVencimiento <= end
+                Log.d("fechadevto", cliente.fechaPagoDeMes.toString())
+                fechaVencimiento != null && (fechaVencimiento >= start && fechaVencimiento <= end)
             }
         }
 
@@ -227,15 +228,15 @@ class CustomerManagmentActivity : BaseActivity() {
         }
     }
 
-    private fun dateStringToLong(dateString: String? = null, format: String = "yyyy/MM/dd"): Long? {
+    private fun dateStringToLong(dateString: String? = null, format: String = "yyyy-MM-dd"): Long? {
         if (dateString == null ) return null
-        // 1. Crear el objeto SimpleDateFormat con el formato de tu String
         val formatter = SimpleDateFormat(format, Locale.getDefault())
 
         // 2. Intentar parsear el String a un objeto Date
         return try {
             val date = formatter.parse(dateString)
             // 3. Convertir el objeto Date a Long (milisegundos)
+            Log.d("date.time try", date.time.toString())
             date?.time
         } catch (e: Exception) {
             // Manejar el caso de que el String no coincida con el formato
