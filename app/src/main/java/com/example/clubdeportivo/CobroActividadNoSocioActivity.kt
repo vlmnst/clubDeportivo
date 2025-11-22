@@ -82,7 +82,8 @@ class CobroActividadNoSocioActivity : BaseActivity() {
             .setPositiveButton("ACEPTAR") { dialog, which ->
 
                 Toast.makeText(this, "Pago acreditado correctamente", Toast.LENGTH_LONG).show()
-
+                val intent = Intent(this, CustomerManagmentActivity::class.java)
+                startActivity(intent)
                 // Reiniciar el spinner
                 spinner.setSelection(0)
                 servicioSeleccionado = ""

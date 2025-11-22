@@ -104,7 +104,8 @@ class CobroCuotaSocio : BaseActivity() {
 
                     if (exito) {
                         Toast.makeText(this, "Pago en efectivo registrado correctamente", Toast.LENGTH_LONG).show()
-
+                        val intent = Intent(this, CustomerManagmentActivity::class.java)
+                        startActivity(intent)
                         // limpiar campos
                         radioGroup.clearCheck()
                         metodoPagoSeleccionado = false
