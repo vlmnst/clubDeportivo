@@ -111,6 +111,7 @@ class RegistrarCliente : BaseActivity() {
             val intent = Intent(this, RegistroExitoso::class.java)
             //Pasa los datos del nuevo cliente a la vista RegistroExitoso
             intent.putExtra("nombre", nombre)
+            intent.putExtra("DNI", dniCheck)
             //Corrobora si se trata de Socio o NoSocio y pasa valor del tipo de cliente a la vista RegistroExitoso
             val textTypeClient = if (isSocio) raSocio.text.toString() else raNoSocio.text.toString()
             intent.putExtra("socio", textTypeClient)

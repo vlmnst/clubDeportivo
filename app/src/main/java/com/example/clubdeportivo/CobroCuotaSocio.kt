@@ -4,9 +4,11 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.LinearLayout
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -30,15 +32,15 @@ class CobroCuotaSocio : BaseActivity() {
             insets
         }
 
+        //Obtengo el nombre del cliente
+        val dni = intent.getStringExtra("DNI")
+
+
         //LLAMA A LA FUNCION DE LA BASEACTIVITY (nav menu)
         setupNavigationDrawer()
 
         val txtMonto: TextView = findViewById(R.id.txt_Monto_Pagar)
-        val radioGroup: RadioGroup = findViewById(R.id.radioGroupPago)
         val btnRegistrarPago: Button = findViewById(R.id.btnRegistrarPago)
-
-        // toma dni
-        val inputDni: EditText = findViewById(R.id.inputDniSocio)
 
         //Traer datos de la BD//
         val db = BDatos(this)
@@ -56,10 +58,9 @@ class CobroCuotaSocio : BaseActivity() {
 
 
         fun actualizarEstadoBoton() {
-            val dniIngresado = inputDni.text.toString().trim().isNotEmpty()
 
             // si metodo pago Y  DNI escrito then = botón se activa
-            val habilitar = metodoPagoSeleccionado && dniIngresado
+            val habilitar = metodoPagoSeleccionado
 
             btnRegistrarPago.isEnabled = habilitar
 
@@ -70,67 +71,42 @@ class CobroCuotaSocio : BaseActivity() {
             btnRegistrarPago.backgroundTintList = ColorStateList.valueOf(color)
         }
 
-        //  texto del DNI
-        inputDni.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable?) {
-                actualizarEstadoBoton()
-            }
-        })
-
-        //  RadioGroup
-        radioGroup.setOnCheckedChangeListener { _, checkedId ->
-            metodoPagoSeleccionado =
-                checkedId == R.id.btnTarjeta || checkedId == R.id.btnEfectivo
-            actualizarEstadoBoton()
-
+        val radioGroup: RadioGroup = findViewById(R.id.radioGroupPago)
+        val form = findViewById<LinearLayout>(R.id.allForm)
+        radioGroup.setOnCheckedChangeListener { group,checkedId ->
             when (checkedId) {
                 R.id.btnTarjeta -> {
-                    val dniSocio = inputDni.text.toString()
-
-                    // valida DNI
-                    if (dniSocio.isNotEmpty()) {
-                        val intent = Intent(this, CobroCuotaSocioTarjetaActivity::class.java)
-
-                        //  PASo EL <DNI>: "DNI_PASADO" es la clave, dniSocio es el valor
-                        intent.putExtra("DNI_PASADO", dniSocio)
-
-                        startActivity(intent)
-                    } else {
-                        Toast.makeText(this, "Por favor ingresa el DNI antes de continuar", Toast.LENGTH_SHORT).show()
-                    }
-
-                    // Limpiamos selección
-                    radioGroup.clearCheck()
-                    metodoPagoSeleccionado = false
+                    form.visibility = View.VISIBLE
                 }
                 R.id.btnEfectivo -> {
-
+                    form.visibility = View.GONE
                 }
             }
+            metodoPagoSeleccionado = true
+            actualizarEstadoBoton()
         }
+
+
 
         //  Registrar Pago EFECTIvo
         btnRegistrarPago.setOnClickListener {
             val simpleDialog: AlertDialog = AlertDialog.Builder(this)
                 .setTitle("Cobro cuota socios")
-                .setMessage("¿Desea registrar el pago en EFECTIVO?")
+                .setMessage("¿Desea registrar el pago?")
                 .setPositiveButton("ACEPTAR") { dialog, which ->
 
                     // btener datos
-                    val dniCliente = inputDni.text.toString().trim()
                     val fechaHoy = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
                     // Llamar a la DB
                     val dbPago = BDatos(this)
-                    val exito = dbPago.registrarPagoCuota(dniCliente, fechaHoy)
+                    val exito = dbPago.registrarPagoCuota(dni!!, fechaHoy)
 
                     if (exito) {
                         Toast.makeText(this, "Pago en efectivo registrado correctamente", Toast.LENGTH_LONG).show()
-
+                        val intent = Intent(this, CustomerManagmentActivity::class.java)
+                        startActivity(intent)
                         // limpiar campos
-                        inputDni.text.clear()
                         radioGroup.clearCheck()
                         metodoPagoSeleccionado = false
                         actualizarEstadoBoton()

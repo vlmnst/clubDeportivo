@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -67,7 +68,7 @@ class CobroActividadNoSocioActivity : BaseActivity() {
 
         btnRegistrarPago.setOnClickListener {
             if (servicioSeleccionado.isEmpty()) {
-                Toast.makeText(this, "Por favor seleccioná un servicio", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Por favor seleccioná una actividad", Toast.LENGTH_SHORT).show()
             } else {
                 mostrarConfirmacionPago(spinner)
             }
@@ -81,7 +82,8 @@ class CobroActividadNoSocioActivity : BaseActivity() {
             .setPositiveButton("ACEPTAR") { dialog, which ->
 
                 Toast.makeText(this, "Pago acreditado correctamente", Toast.LENGTH_LONG).show()
-
+                val intent = Intent(this, CustomerManagmentActivity::class.java)
+                startActivity(intent)
                 // Reiniciar el spinner
                 spinner.setSelection(0)
                 servicioSeleccionado = ""

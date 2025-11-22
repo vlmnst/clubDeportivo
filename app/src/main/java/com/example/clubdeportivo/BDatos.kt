@@ -225,33 +225,6 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
         return cliente
     }
 
-    fun buscarClientePorDNIBool(dni: String): Boolean {
-        val db = this.readableDatabase
-        var existeCliente = false
-
-        // Definir la consulta: queremos saber si hay alguna fila con ese DNI
-        val selection = "dni = ?"
-        val selectionArgs = arrayOf(dni)
-
-        val cursor = db.query(
-            TABLA_CLIENTE,
-            arrayOf("ID"),
-            selection,
-            selectionArgs,
-            null,
-            null,
-            null
-        )
-        cursor.use {
-            if (it.moveToFirst()) {
-                existeCliente = true
-            }
-        }
-
-        db.close()
-
-        return existeCliente
-    }
 
     fun verificarUsuario(nombre: String, clave: String): Boolean {
         // Obtener una base de datos legible
@@ -333,8 +306,6 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
     }
 
 
-
-
     fun carnetImpreso(socioID : Int): Boolean{
         val db = this.writableDatabase
 
@@ -356,27 +327,33 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
         } > 0
     }
 
-    fun resetDatabase() {
-        val db = writableDatabase
-
-        db.execSQL("DROP TABLE IF EXISTS $TABLA_CLIENTE")
-        db.execSQL("DROP TABLE IF EXISTS $TABLA_SERVICIOS")
-
-        // Agregá todos los DROP que necesites
-
-        onCreate(db)  // vuelve a crear las tablas
-
-        db.close()
-    }
-
-
     fun registrarPagoCuota(dni: String, fecha: String): Boolean {
         val db = this.writableDatabase
         val valores = ContentValues()
 
-        valores.put("fecha_pago_de_mes", fecha)
 
-        //  WHERE : por DNI
+        val sdf = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
+
+        try {
+
+            val fechaObjeto = sdf.parse(fecha)
+
+            // Usar Calendar para sumar 1 mes
+            val calendar = java.util.Calendar.getInstance()
+            calendar.time = fechaObjeto!! // Asignamos la fecha recibida
+            calendar.add(java.util.Calendar.MONTH, 1) // La magia: Sumamos 1 mes
+
+            // 4. Convertir la nueva fecha calculada a String de nuevo
+            val fechaVencimiento = sdf.format(calendar.time)
+
+            // 5. Guardar la FECHA CON EL MES SUMADO
+            valores.put("fecha_pago_de_mes", fechaVencimiento)
+
+        } catch (e: Exception) {
+            // Si algo falla en la conversión, guardamos la fecha original por seguridad
+            valores.put("fecha_pago_de_mes", fecha)
+        }
+
         val filasAfectadas = db.update(TABLA_CLIENTE, valores, "dni = ?", arrayOf(dni))
 
         db.close()
@@ -384,8 +361,6 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
         // Si filasAfectadas > 0, significa que encontró al cliente y lo actualizó
         return filasAfectadas > 0
     }
-
-
 
 }
 
