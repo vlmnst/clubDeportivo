@@ -33,7 +33,7 @@ class CobroCuotaSocio : BaseActivity() {
         }
 
         //Obtengo el nombre del cliente
-        val nombreCompleto = intent.getStringExtra("nombreCompleto")
+        val dni = intent.getStringExtra("DNI")
 
 
         //LLAMA A LA FUNCION DE LA BASEACTIVITY (nav menu)
@@ -41,8 +41,6 @@ class CobroCuotaSocio : BaseActivity() {
 
         val txtMonto: TextView = findViewById(R.id.txt_Monto_Pagar)
         val btnRegistrarPago: Button = findViewById(R.id.btnRegistrarPago)
-        // toma dni
-        val inputDni: EditText = findViewById(R.id.inputDniSocio)
 
         //Traer datos de la BD//
         val db = BDatos(this)
@@ -60,10 +58,9 @@ class CobroCuotaSocio : BaseActivity() {
 
 
         fun actualizarEstadoBoton() {
-            val dniIngresado = inputDni.text.toString().trim().isNotEmpty()
 
             // si metodo pago Y  DNI escrito then = botón se activa
-            val habilitar = metodoPagoSeleccionado && dniIngresado
+            val habilitar = metodoPagoSeleccionado
 
             btnRegistrarPago.isEnabled = habilitar
 
@@ -83,19 +80,11 @@ class CobroCuotaSocio : BaseActivity() {
                 }
                 R.id.btnEfectivo -> {
                     form.visibility = View.GONE
-
                 }
             }
+            metodoPagoSeleccionado = true
+            actualizarEstadoBoton()
         }
-        //  texto del DNI
-        inputDni.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable?) {
-                actualizarEstadoBoton()
-            }
-        })
-
 
 
 
@@ -107,18 +96,16 @@ class CobroCuotaSocio : BaseActivity() {
                 .setPositiveButton("ACEPTAR") { dialog, which ->
 
                     // btener datos
-                    val dniCliente = inputDni.text.toString().trim()
                     val fechaHoy = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
                     // Llamar a la DB
                     val dbPago = BDatos(this)
-                    val exito = dbPago.registrarPagoCuota(dniCliente, fechaHoy)
+                    val exito = dbPago.registrarPagoCuota(dni!!, fechaHoy)
 
                     if (exito) {
                         Toast.makeText(this, "Pago en efectivo registrado correctamente", Toast.LENGTH_LONG).show()
 
                         // limpiar campos
-                        inputDni.text.clear()
                         radioGroup.clearCheck()
                         metodoPagoSeleccionado = false
                         actualizarEstadoBoton()

@@ -69,13 +69,13 @@ class ClientDetailDialogFragment : DialogFragment() {
         }
         btnCobrarCuota.setOnClickListener {
             val intent = Intent(requireContext(), CobroCuotaSocio::class.java)
-            intent.putExtra("nombreCompleto", currentClient?.nombre)
+            intent.putExtra("DNI", currentClient?.dni)
 
             startActivity(intent)
         }
         btnCobrarActividad.setOnClickListener {
             val intent = Intent(requireContext(), CobroActividadNoSocioActivity::class.java)
-            intent.putExtra("nombreCompleto", currentClient?.nombre)
+            intent.putExtra("DNI", currentClient?.dni)
             startActivity(intent)
         }
     }
