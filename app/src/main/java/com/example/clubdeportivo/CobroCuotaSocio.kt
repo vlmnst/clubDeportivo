@@ -41,7 +41,7 @@ class CobroCuotaSocio : BaseActivity() {
         txtMonto.text = cuotaSocio
         db.close()
 
-        txtMonto.text = "$$cuotaSocio
+        txtMonto.text = "$$cuotaSocio"
 
         //Deshabilitar botón//
         btnRegistrarPago.isEnabled = false

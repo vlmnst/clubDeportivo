@@ -6,13 +6,17 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import java.sql.Date
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 // nombre de la DB
 private val BD = "BaseDatosClub"
-private val VERSION = 2
+private val VERSION = 3
 private const val TABLA_USUARIO = "Usuario"
 private const val TABLA_CLIENTE = "Cliente"
 private const val TABLA_SERVICIOS = "Servicios"
+private const val TABLA_PAGOS = "Pagos"
 
 
 // clase BDatos SQLiteOpenHelper
@@ -62,6 +66,20 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
 
         //insertar los servicios
         insertarServicios(db)
+
+        //TablaPagosNoSocios
+        val crearTablaPagosSql = "CREATE TABLE IF NOT EXISTS $TABLA_PAGOS (" +
+        "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+        "cliente_id INTEGER NOT NULL," +
+        "tipo_servicio TEXT NOT NULL," +
+        "nombre_servicio TEXT NOT NULL," +
+        "monto TEXT NOT NULL," +
+        "fecha TEXT NOT NULL," +
+        "FOREIGN KEY(cliente_id) REFERENCES $TABLA_CLIENTE(ID)" +
+                ")"
+
+        db?.execSQL(crearTablaPagosSql)
+
     }
 
 
@@ -92,7 +110,7 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
             Pair ("Musculación", "3500")
         )
 
-        servicios.forEach { (tipo,monto) ->
+        servicios.forEach { (tipo, monto) ->
             val valores = ContentValues().apply {
                 put("tipo_servicio", tipo)
                 put("monto", monto)
@@ -101,30 +119,21 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
         }
     }
 
-    //obtener valor del monto//
     fun obtenerMontoServicio(tipoServicio: String): String {
         val db = readableDatabase
         var monto = ""
-
-        val selection = "tipo_servicio = ?"
-        val selectionArgs = arrayOf(tipoServicio)
-
         val cursor = db.query(
-            TABLA_SERVICIOS,      // tabla
-            arrayOf("monto"),     // columna a devolver
-            selection,            // WHERE tipo_servicio = ?
-            selectionArgs,        // argumentos del WHERE
-            null,                 // groupBy
-            null,                 // having
-            null                  // orderBy
+            TABLA_SERVICIOS,
+            arrayOf("monto"),
+            "tipo_servicio = ?",
+            arrayOf(tipoServicio),
+            null, null, null
         )
-
         cursor.use {
             if (it.moveToFirst()) {
                 monto = it.getString(it.getColumnIndexOrThrow("monto"))
             }
         }
-
         db.close()
         return monto
     }
@@ -285,6 +294,34 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
         return lista
     }
 
+    fun agregarPago(
+        clienteId: Int,
+        tipoServicio: String,
+        nombreServicio: String,
+        monto: String
+    ): Boolean {
+        val db = writableDatabase
+        val fechaActual = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(java.util.Date())
+
+        val valores = ContentValues().apply {
+            put("cliente_id", clienteId)
+            put("tipo_servicio", tipoServicio)
+            put("nombre_servicio", nombreServicio)
+            put("monto", monto)
+            put("fecha", fechaActual)
+        }
+
+        return db.use {
+            try {
+                it.insertOrThrow(TABLA_PAGOS, null, valores)
+                true
+            } catch (e: Exception) {
+                Log.e("BDatos", "Error al registrar pago: ${e.message}")
+                false
+            }
+        }
+    }
+
     fun agregarServicio(tipoServicio: String, monto: String) :Boolean{
         val db = this.writableDatabase
 
@@ -331,6 +368,7 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
 
         db.execSQL("DROP TABLE IF EXISTS $TABLA_CLIENTE")
         db.execSQL("DROP TABLE IF EXISTS $TABLA_SERVICIOS")
+        db.execSQL("DROP TABLE IF EXISTS $TABLA_PAGOS")
 
         // Agregá todos los DROP que necesites
 
