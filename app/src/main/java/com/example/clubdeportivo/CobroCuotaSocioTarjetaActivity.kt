@@ -9,11 +9,14 @@ import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast //  para el mensaje confirma pago
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.toColorInt
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import java.text.SimpleDateFormat // Para la fecha
+import java.util.Date // Para la fecha
+import java.util.Locale // Para la fecha
 
 
 class CobroCuotaSocioTarjetaActivity : BaseActivity() {
@@ -31,6 +34,10 @@ class CobroCuotaSocioTarjetaActivity : BaseActivity() {
         //LLAMA A LA FUNCION DE LA BASEACTIVITY (nav menu)
         setupNavigationDrawer()
 
+
+        // REcibir dni
+        val dniSocioAPagar = intent.getStringExtra("DNI_PASADO")
+
         //Campos referenciados
         val txtMonto: TextView = findViewById(R.id.txt_Monto_Pagar)
         val btnRegistrarPago: Button = findViewById(R.id.btnRegistrarPago)
@@ -42,6 +49,7 @@ class CobroCuotaSocioTarjetaActivity : BaseActivity() {
 
         //Deshabilitar botón//
         btnRegistrarPago.isEnabled = false
+
 
         //Traer datos de la BD//
         val db = BDatos(this)
@@ -82,14 +90,41 @@ class CobroCuotaSocioTarjetaActivity : BaseActivity() {
         editCVV.addTextChangedListener(watcher)
 
         btnRegistrarPago.setOnClickListener {
+
+            if (dniSocioAPagar.isNullOrEmpty()) {
+                Toast.makeText(this, "Error: No se recibió el DNI del socio a pagar", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val simpleDialog: AlertDialog = AlertDialog.Builder(this)
                 .setTitle("Cobro cuota socios")
                 .setMessage("¿Desea registrar el pago?")
                 .setPositiveButton("ACEPTAR") { dialog, which ->
-                    //Va a una nueva pantalla
-                    val intent = Intent(this, ConfirmacionCobroSocioActivity::class.java)
-                    startActivity(intent)
-                    finish()
+
+                    // FECHA
+                    val fechaHoy = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+
+                    // ACTUALIZAR BD
+                    val dbPago = BDatos(this)
+                    //
+                    val exito = dbPago.registrarPagoCuota(dniSocioAPagar!!, fechaHoy)
+
+                    if (exito) {
+                        Toast.makeText(this, "Pago acreditado correctamente al socio $dniSocioAPagar", Toast.LENGTH_LONG).show()
+
+                        // Limpiar campos
+                        editTitular.text.clear()
+                        editDNI.text.clear()
+                        editNumeroTarjeta.text.clear()
+                        editFecha.text.clear()
+                        editCVV.text.clear()
+
+
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Error: El DNI del socio ($dniSocioAPagar) no existe en la base de datos", Toast.LENGTH_LONG).show()
+                    }
+
+                    dialog.dismiss()
                 }
                 .setNegativeButton("CANCELAR") { dialog, which ->
                     dialog.dismiss()
@@ -97,8 +132,6 @@ class CobroCuotaSocioTarjetaActivity : BaseActivity() {
                 .create()
 
             simpleDialog.show()
-
         }
-
     }
 }

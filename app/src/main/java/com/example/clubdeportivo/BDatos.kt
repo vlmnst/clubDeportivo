@@ -333,6 +333,8 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
     }
 
 
+
+
     fun carnetImpreso(socioID : Int): Boolean{
         val db = this.writableDatabase
 
@@ -365,6 +367,22 @@ class BDatos(contexto: Context) : SQLiteOpenHelper(contexto, BD, null, VERSION) 
         onCreate(db)  // vuelve a crear las tablas
 
         db.close()
+    }
+
+
+    fun registrarPagoCuota(dni: String, fecha: String): Boolean {
+        val db = this.writableDatabase
+        val valores = ContentValues()
+
+        valores.put("fecha_pago_de_mes", fecha)
+
+        //  WHERE : por DNI
+        val filasAfectadas = db.update(TABLA_CLIENTE, valores, "dni = ?", arrayOf(dni))
+
+        db.close()
+
+        // Si filasAfectadas > 0, significa que encontró al cliente y lo actualizó
+        return filasAfectadas > 0
     }
 
 

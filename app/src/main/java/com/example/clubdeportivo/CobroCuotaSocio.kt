@@ -5,17 +5,19 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.toColorInt
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import android.text.TextWatcher
-import android.widget.TextView
-
+import java.text.SimpleDateFormat // fecha
+import java.util.Date //  la fecha
+import java.util.Locale //  fecha
 
 class CobroCuotaSocio : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +37,9 @@ class CobroCuotaSocio : BaseActivity() {
         val radioGroup: RadioGroup = findViewById(R.id.radioGroupPago)
         val btnRegistrarPago: Button = findViewById(R.id.btnRegistrarPago)
 
+        // toma dni
+        val inputDni: EditText = findViewById(R.id.inputDniSocio)
+
         //Traer datos de la BD//
         val db = BDatos(this)
         val cuotaSocio = db.obtenerMontoServicio("Cuota Socio")
@@ -49,18 +54,32 @@ class CobroCuotaSocio : BaseActivity() {
 
         var metodoPagoSeleccionado = false
 
-        //Actualizo estado del botón
-        fun actualizarEstadoBoton() {
-            btnRegistrarPago.isEnabled = metodoPagoSeleccionado
 
-            val color = if (metodoPagoSeleccionado)
+        fun actualizarEstadoBoton() {
+            val dniIngresado = inputDni.text.toString().trim().isNotEmpty()
+
+            // si metodo pago Y  DNI escrito then = botón se activa
+            val habilitar = metodoPagoSeleccionado && dniIngresado
+
+            btnRegistrarPago.isEnabled = habilitar
+
+            val color = if (habilitar)
                 "#0066CC".toColorInt()
             else
                 "#BDBDBD".toColorInt()
             btnRegistrarPago.backgroundTintList = ColorStateList.valueOf(color)
         }
 
-        //Detectar cuando eligen metodo de pago//
+        //  texto del DNI
+        inputDni.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                actualizarEstadoBoton()
+            }
+        })
+
+        //  RadioGroup
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
             metodoPagoSeleccionado =
                 checkedId == R.id.btnTarjeta || checkedId == R.id.btnEfectivo
@@ -68,8 +87,23 @@ class CobroCuotaSocio : BaseActivity() {
 
             when (checkedId) {
                 R.id.btnTarjeta -> {
-                    startActivity(Intent(this, CobroCuotaSocioTarjetaActivity::class.java))
+                    val dniSocio = inputDni.text.toString()
+
+                    // valida DNI
+                    if (dniSocio.isNotEmpty()) {
+                        val intent = Intent(this, CobroCuotaSocioTarjetaActivity::class.java)
+
+                        //  PASo EL <DNI>: "DNI_PASADO" es la clave, dniSocio es el valor
+                        intent.putExtra("DNI_PASADO", dniSocio)
+
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(this, "Por favor ingresa el DNI antes de continuar", Toast.LENGTH_SHORT).show()
+                    }
+
+                    // Limpiamos selección
                     radioGroup.clearCheck()
+                    metodoPagoSeleccionado = false
                 }
                 R.id.btnEfectivo -> {
 
@@ -77,26 +111,41 @@ class CobroCuotaSocio : BaseActivity() {
             }
         }
 
-        //Accion del alert al presionar registrar pago//
+        //  Registrar Pago EFECTIvo
         btnRegistrarPago.setOnClickListener {
             val simpleDialog: AlertDialog = AlertDialog.Builder(this)
                 .setTitle("Cobro cuota socios")
-                .setMessage("¿Desea registrar el pago?")
+                .setMessage("¿Desea registrar el pago en EFECTIVO?")
                 .setPositiveButton("ACEPTAR") { dialog, which ->
-                    //Va a una nueva pantalla
-                    val intent = Intent(this, ConfirmacionCobroSocioActivity::class.java)
-                    startActivity(intent)
-                    finish()
+
+                    // btener datos
+                    val dniCliente = inputDni.text.toString().trim()
+                    val fechaHoy = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+
+                    // Llamar a la DB
+                    val dbPago = BDatos(this)
+                    val exito = dbPago.registrarPagoCuota(dniCliente, fechaHoy)
+
+                    if (exito) {
+                        Toast.makeText(this, "Pago en efectivo registrado correctamente", Toast.LENGTH_LONG).show()
+
+                        // limpiar campos
+                        inputDni.text.clear()
+                        radioGroup.clearCheck()
+                        metodoPagoSeleccionado = false
+                        actualizarEstadoBoton()
+                    } else {
+                        Toast.makeText(this, "Error: DNI no encontrado en el sistema", Toast.LENGTH_LONG).show()
+                    }
+
+                    dialog.dismiss()
                 }
                 .setNegativeButton("CANCELAR") { dialog, which ->
                     dialog.dismiss()
                 }
                 .create()
 
-                simpleDialog.show()
-
+            simpleDialog.show()
         }
-
-
     }
 }
