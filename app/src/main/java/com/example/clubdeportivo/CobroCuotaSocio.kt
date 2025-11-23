@@ -118,20 +118,6 @@ class CobroCuotaSocio : BaseActivity() {
 
         // Acción del botón registrar pago
         btnRegistrarPago.setOnClickListener {
-            // Validación campos tarjeta si se seleccionó tarjeta
-            if (metodoPagoSeleccionado == "Tarjeta") {
-                val completos = editTitular.text.isNotBlank() &&
-                        editDNI.text.isNotBlank() &&
-                        editNumeroTarjeta.text.isNotBlank() &&
-                        editFecha.text.isNotBlank() &&
-                        editCVV.text.isNotBlank()
-                if (!completos) {
-                    Toast.makeText(this, "Complete todos los campos de tarjeta", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
-            }
-
-            // Diálogo de confirmación de pago
             val simpleDialog = AlertDialog.Builder(this)
                 .setTitle("Cobro cuota socios")
                 .setMessage("¿Desea registrar el pago?")
